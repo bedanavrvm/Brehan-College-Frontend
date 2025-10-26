@@ -1,0 +1,2053 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===================================================================
+   BREHAN PLATFORM DESIGN SYSTEM - Phases 1-4 Complete
+   Frappe LMS Inspired - Modern, Clean, Minimalist Design
+   Phase 4: Micro-Interactions & Animations Added
+   =================================================================== */
+
+@layer base {
+  /* Apply Inter font globally + improved readability */
+  * {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ================================================================= */
+/* PHASE 4: MICRO-INTERACTIONS & ANIMATIONS */
+/* Subtle animations that add polish and delight */
+/* ================================================================= */
+
+/* Smooth Transitions */
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .transition-bounce {
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+/* Button Hover Effects */
+.btn-hover-lift {
+  @apply transition-all duration-200;
+}
+
+.btn-hover-lift:hover {
+  @apply transform -translate-y-0.5 shadow-lg;
+}
+
+.btn-hover-scale {
+  @apply transition-transform duration-200;
+}
+
+.btn-hover-scale:hover {
+  @apply scale-105;
+}
+
+/* Card Interaction Effects */
+.card-interactive {
+  @apply transition-all duration-300;
+}
+
+.card-interactive:hover {
+  @apply transform -translate-y-1 shadow-xl;
+}
+
+.card-glow:hover {
+  box-shadow: 0 10px 40px -10px rgba(79, 70, 229, 0.3);
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Slide In Animation */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.4s ease-out;
+}
+
+/* Pulse Animation for Notifications */
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Shimmer Effect for Loading */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #f3f4f6 0%, #e5e7eb 50%, #f3f4f6 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Focus Ring Animation */
+.focus-ring-animated {
+  @apply transition-all duration-200;
+}
+
+.focus-ring-animated:focus {
+  @apply ring-2 ring-indigo-500 ring-offset-2;
+  animation: pulse-ring 0.6s ease-out;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+  }
+}
+
+/* --- CORE PAGE LAYOUTS --- */
+
+/* Full screen page container for all main views */
+.page-container {
+  @apply min-h-screen bg-gray-50 pt-24 pb-4 sm:pb-6 lg:pb-8 px-4 sm:px-6 lg:px-8;
+}
+
+/* src/assets/main.css (Home Page/Landing Page Components) */
+
+/* ----------------------------------------------------------------- */
+/* 1. NAVIGATION BAR (Used for primary site navigation) */
+/* ----------------------------------------------------------------- */
+
+.main-nav {
+  /* Layout: Full width, fixed height, background, and flex container */
+  @apply sticky top-0 z-50 bg-white shadow-md p-4 flex justify-between items-center;
+
+  /* Logo Link */
+  & .nav-logo {
+    @apply text-xl font-bold text-green-600;
+  }
+
+  /* Navigation Links Wrapper (For desktop links) */
+  & .nav-links {
+    @apply hidden md:flex space-x-6;
+  }
+
+  /* Individual Navigation Links (e.g., Home, Login) */
+  & a {
+    @apply text-gray-700 hover:text-green-600 font-medium transition duration-150;
+  }
+}
+
+/* User Menu Dropdown (in Navbar) */
+.user-menu-button {
+  /* Layout and appearance */
+  @apply flex items-center space-x-2 cursor-pointer;
+}
+
+.user-avatar {
+  /* Circle with initials */
+  @apply w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-sm;
+}
+
+.user-menu-button span {
+  /* User name text */
+  @apply text-gray-800 font-medium text-sm hidden sm:block;
+}
+
+.user-menu-dropdown {
+  /* Positioning and appearance */
+  @apply absolute right-0 mt-2 w-48 bg-white rounded-md shadow-xl z-50 py-1;
+  @apply border border-gray-200;
+}
+
+.user-menu-item {
+  /* Individual links/buttons in the dropdown */
+  @apply block px-4 py-2 text-sm text-gray-700;
+  @apply hover:bg-gray-100 transition duration-150;
+}
+
+/* Cart icon button specific styles */
+.cart-icon-button {
+  @apply relative;
+  /* Badge positioning */
+  & .badge { @apply absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center; }
+}
+
+/* ----------------------------------------------------------------- */
+/* 2. HERO SECTION (Main introductory block) */
+/* ----------------------------------------------------------------- */
+
+.hero-section {
+  /* Layout: Large vertical padding/height, center content */
+  @apply py-20 text-center bg-gray-50;
+
+  /* Main Headline (H1) */
+  & h1 {
+    @apply text-5xl font-extrabold text-gray-900 mb-4;
+  }
+
+  /* Subtitle/Subhead (P tag) */
+  & p {
+    @apply text-xl text-gray-600 max-w-3xl mx-auto mb-8;
+  }
+
+  /* Button Wrapper (To center multiple CTAs if needed) */
+  & .hero-actions {
+    @apply flex justify-center space-x-4;
+  }
+}
+
+
+/* ----------------------------------------------------------------- */
+/* 3. FEATURE SECTION (The existing menu grid structure) */
+/* ----------------------------------------------------------------- */
+
+.feature-section {
+    /* Apply standard section padding */
+    @apply py-12; 
+    
+    /* Nest the existing .menu-grid for content layout */
+    
+    /* Section Heading (H2) */
+    & h2 {
+        @apply text-3xl font-bold text-center text-gray-800 mb-8;
+    }
+}
+
+.menu-grid {
+  @apply max-w-6xl mx-auto ; /* Added for centering within the section */
+  @apply grid gap-6;
+  @apply grid-cols-1; 
+  @apply md:grid-cols-2; 
+  @apply lg:grid-cols-3;
+  @apply overflow-visible;
+}
+
+
+/* ----------------------------------------------------------------- */
+/* 4. SITE FOOTER */
+/* ----------------------------------------------------------------- */
+
+.site-footer {
+  /* Layout: Background, padding, text style */
+  @apply z-50 bg-gray-800 text-gray-300 p-8 mt-12 fixed bottom-0 left-0 right-0;
+
+  /* Inner container to constrain content width */
+  & .footer-content {
+    @apply max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center;
+  }
+
+  /* Copyright text */
+  & .copyright-text {
+    @apply text-sm;
+  }
+
+  /* Link Wrapper */
+  & .footer-links {
+    @apply flex space-x-4 mt-4 md:mt-0;
+  }
+
+  /* Footer Links */
+  & a {
+    @apply hover:text-green-500 transition duration-150 text-sm;
+  }
+}
+
+/* ----------------------------------------------------------------- */
+/* 5. REUSABLE CTA BUTTON (Primary Call to Action) */
+/* ----------------------------------------------------------------- */
+
+.cta-button {
+    /* Appearance, size, padding, and hover */
+    @apply bg-green-500 text-white font-semibold py-3 px-6 rounded-full transition duration-200;
+    @apply hover:bg-green-600 shadow-lg;
+}
+
+
+
+/* src/assets/main.css (Menu Card Component) */
+
+/* ----------------------------------------------------------------- */
+/* MENU CARD COMPONENT */
+/* ----------------------------------------------------------------- */
+
+.menu-card {
+  /* Container Styling */
+  @apply  bg-white rounded-xl shadow-lg transition-transform duration-300 relative;
+  
+  /* Hover Effect */
+  @apply hover:shadow-xl hover:scale-[1.02];
+
+  /* 1. Image Block (applied to the <img> tag or image wrapper) */
+  & .card-image {
+    /* Ensures the image fills the space but maintains aspect ratio */
+    @apply w-full h-48 object-cover;
+  }
+
+  /* 2. Content Body Wrapper */
+  & .card-body {
+    @apply p-6;
+  }
+
+  /* 3. Dish Title (e.g., <h2>) */
+  & h2 {
+    @apply text-xl font-bold text-gray-900 mb-2;
+  }
+
+  /* 4. Description/Price (e.g., <p>) */
+  & p {
+    @apply text-gray-600 mb-4;
+  }
+
+  /* 5. Action Button (Can reuse .cta-button or create a small one) */
+  & .card-action {
+    /* Small, dense button specifically for the card */
+    @apply inline-block bg-green-500 text-white font-semibold py-2 px-4 rounded-full text-sm;
+    @apply hover:bg-green-600 transition duration-200;
+  }
+
+  & .card-footer {
+    @apply flex justify-between items-center mt-4;
+  }
+
+  /* Popup card styling — consistent with your main.css design */
+  & .popup-card {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e1e1e;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    width: 18rem;
+    z-index: 71;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+    margin-top: 0.5rem;
+}
+
+/* Simple fade-scale animation */
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  opacity: 0;
+  /* 🛑 CHANGE: Start position is slightly higher, making it slide down */
+  transform: translateY(-10px) translateX(-50%);
+}
+/* State during transition and when finished */
+.fade-scale-enter-to,
+.fade-scale-leave-from {
+  opacity: 1;
+  /* End position is the original centered position */
+  transform: translateY(0) translateX(-50%);
+}
+
+}
+
+
+
+/* src/assets/main.css (Order/Checkout Page Components) */
+
+/* ----------------------------------------------------------------- */
+/* 1. ORDER PAGE LAYOUT */
+/* ----------------------------------------------------------------- */
+
+/* Main container for the order view (applies padding and centers the content) */
+.order-page {
+  @apply max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8;
+}
+
+/* Container for the two-column checkout layout (Cart Items on left, Summary on right) */
+.checkout-layout {
+  /* Responsive grid layout */
+  @apply grid gap-10 lg:grid-cols-3;
+}
+
+/* Left column (Cart Items List) */
+.cart-list-container {
+  /* Takes up 2/3 space on large screens */
+  @apply lg:col-span-2; 
+}
+
+
+/* ----------------------------------------------------------------- */
+/* 2. ORDER SUMMARY CARD (Right Column) */
+/* ----------------------------------------------------------------- */
+
+.summary-card {
+  /* Styling for the card container */
+  @apply bg-white p-6 shadow-xl rounded-lg border border-gray-100 h-fit sticky top-20; 
+
+  /* Title */
+  & h2 {
+    @apply text-2xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200;
+  }
+
+  /* Summary Row (e.g., Subtotal, Tax) */
+  & .summary-row {
+    @apply flex justify-between text-base text-gray-700 py-1;
+  }
+
+  /* Total Row (The final calculation) */
+  & .total-row {
+    @apply flex justify-between font-bold text-xl mt-4 pt-4 border-t-2 border-green-500;
+  }
+}
+
+
+/* ----------------------------------------------------------------- */
+/* 3. CART ITEM ROW (List of Items) */
+/* ----------------------------------------------------------------- */
+
+.cart-item-row {
+  /* Row Layout */
+  @apply flex items-center justify-between py-4 border-b border-gray-200; 
+
+  /* Item Info Container (Image, Name, Price) */
+  & .item-details {
+    @apply flex items-center space-x-4 w-1/2;
+  }
+
+  /* Item Image */
+  & .item-image {
+    @apply w-16 h-16 object-cover rounded-md;
+  }
+
+  /* Item Name/Title */
+  & h3 {
+    @apply text-lg font-medium text-gray-800;
+  }
+
+  /* Quantity Controls Wrapper */
+  & .qty-controls {
+    @apply flex items-center space-x-3;
+  }
+
+  /* Quantity Button (e.g., plus/minus) */
+  & button {
+    @apply bg-gray-200 text-gray-700 w-8 h-8 rounded-full hover:bg-gray-300 transition;
+  }
+
+  /* Price/Subtotal Display */
+  & .item-price {
+    @apply font-semibold text-lg text-gray-900;
+  }
+}
+
+  /* Sidebar transitions */
+  & .cart-sidebar {
+    @apply fixed top-20 right-0 w-96 h-full bg-white shadow-2xl z-50 p-6 overflow-y-auto transition-transform duration-500;
+    
+}
+
+  & .item-subtotal {
+    @apply font-semibold text-green-500 text-right w-24;
+}
+
+
+  & .details-modal {
+    @apply absolute top-24 left-1/2 transform -translate-x-1/2;
+    @apply flex items-start justify-center z-40;
+}
+
+  & .details-content {
+    @apply bg-white p-6 rounded-2xl shadow-2xl w-11/12 sm:w-2/3 lg:w-1/2 max-h-[85vh] overflow-y-auto;
+    @apply border border-gray-200;
+    animation: fadeInUp 0.3s ease-in-out;
+}
+
+/* ✅ Add subtle fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cart-sidebar.is-visible {
+    /* Brings the element back to its original position (0 movement) */
+    transform: translateX(0); 
+}
+
+
+/* src/assets/main.css (Payment Page Components) */
+
+/* ----------------------------------------------------------------- */
+/* 1. PAYMENT PAGE LAYOUT */
+/* ----------------------------------------------------------------- */
+
+/* Main container for the payment view (similar to order-page but specific) */
+.payment-page {
+  @apply max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8;
+}
+
+/* ----------------------------------------------------------------- */
+/* 2. PAYMENT METHOD SELECTION */
+/* ----------------------------------------------------------------- */
+
+/* Container for grouping payment method options */
+.payment-methods-group {
+  @apply mb-8;
+}
+
+/* Individual radio/checkbox option for a payment method */
+.method-option {
+  /* Layout and appearance */
+  @apply p-4 border border-gray-300 rounded-lg mb-3 cursor-pointer transition-all duration-200;
+  @apply hover:border-green-500 flex items-center justify-between;
+}
+
+/* Style for the selected method */
+.method-option.is-selected {
+  @apply border-green-600 ring-2 ring-green-200 bg-green-50;
+}
+
+
+/* ----------------------------------------------------------------- */
+/* 3. CARD FORM FIELDS (Specific Inputs) */
+/* ----------------------------------------------------------------- */
+
+/* Container for grouping card fields (like name, number, expiration) */
+.card-details-group {
+  @apply grid grid-cols-1 gap-6 sm:grid-cols-2;
+}
+
+/* Used for the section that requires two fields side-by-side (Expiry/CVV) */
+.form-split-row {
+  @apply grid grid-cols-2 gap-4;
+}
+
+/* ----------------------------------------------------------------- */
+/* 4. PAYMENT CONFIRMATION / FOOTER */
+/* ----------------------------------------------------------------- */
+
+/* Final section wrapper for totals and the final button */
+.payment-summary-footer {
+  @apply mt-10 pt-6 border-t-2 border-gray-200;
+}
+
+/* The final text for the confirmation (reusing .total-row from OrderPage) */
+.payment-summary-footer .total-row {
+  @apply mb-6; /* Adds space before the button */
+}
+
+/* The final button (reusing .primary-button from Auth pages) */
+.payment-summary-footer .primary-button {
+  @apply py-3; /* Make the final button slightly taller */
+}
+
+/* src/assets/main.css (Final Auth Section) */
+/* ----------------------------------------------------------------- */
+/* 1. CORE REUSABLE UTILITIES (Used by all forms) */
+/* ----------------------------------------------------------------- */
+
+/* Style for the actual <input>, <select>, or <textarea> field */
+.form-input {
+  /* Dimensions and Appearance */
+  @apply w-full p-3 border border-gray-300 rounded-lg;
+  /* Focus States (The green ring/border effect) */
+  @apply focus:ring-green-500 focus:border-green-500;
+}
+
+/* Style for the main action button */
+.primary-button {
+  /* Layout and Colors */
+  @apply w-full py-3 rounded-xl font-semibold;
+  /* Appearance and Hover State */
+  @apply bg-indigo-600 text-white hover:bg-indigo-700 transition-colors duration-200;
+  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+}
+
+
+/* ----------------------------------------------------------------- */
+/* 2. PAGE & CARD LAYOUTS (The Containers) */
+/* ----------------------------------------------------------------- */
+
+/* The main view container (used by LoginPage.vue and RegisterPage.vue) */
+.auth-page {
+  /* Layout: full screen height, centered content */
+  @apply min-h-screen bg-gray-50 flex items-center justify-center p-4; 
+}
+
+/* Dedicated card container for the LOGIN form (max-w-md for smaller card) */
+.login-card {
+  @apply max-w-md mx-auto p-8 bg-white shadow-xl rounded-lg border border-gray-200;
+}
+
+/* Dedicated card container for the REGISTER form (max-w-lg for wider card) */
+.register-card {
+  @apply max-w-lg mx-auto p-8 bg-white shadow-xl rounded-lg border border-gray-200;
+}
+
+
+/* --- 1. ALERT/MESSAGE BOXES --- */
+
+/* Base style for all alerts */
+.app-alert {
+  /* Heavy @apply usage for all styling, including spacing and shape */
+  @apply flex items-center p-4 rounded-lg shadow-md space-x-3 text-sm;
+}
+
+/* Success Alert (Green) */
+.alert-success {
+  @apply bg-green-100 text-green-700 border border-green-300;
+}
+
+/* Error Alert (Red) */
+.alert-error {
+  @apply bg-red-100 text-red-700 border border-red-300;
+}
+
+/* Info Alert (Indigo) */
+.alert-info {
+  @apply bg-indigo-100 text-indigo-700 border border-indigo-300;
+}
+
+
+/* --- 2. FORM STATES (DISABLED/LOADING) --- */
+
+/* Disabled state for the primary button */
+.primary-button.is-disabled {
+  @apply opacity-50 cursor-not-allowed;
+
+  /* Override the default hover to maintain the disabled appearance */
+  &:hover {
+    @apply bg-green-600; /* Reverts hover to base color */
+  }
+}
+
+/* Disabled state for form inputs/selects (assuming a base .form-input exists) */
+.form-input.is-disabled {
+  @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+
+  /* Explicitly remove focus styles */
+  &:focus {
+    @apply border-gray-300 shadow-none;
+  }
+}
+
+/* Optional: Loading State */
+.is-loading {
+  @apply cursor-wait;
+}
+
+
+/* --- 3. UTILITY CONTAINER --- */
+
+.content-wrapper {
+  /* Heavy @apply usage for dimensions, margins, and padding */
+  @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+
+/* src/assets/main.css (Sidebar Navigation Component - ABSOLUTE FINAL AND ROBUST) */
+
+@layer components {
+  
+  /* 1. Main container for the sidebar navigation */
+  .app-sidebar {
+    @apply bg-gray-900 text-gray-200 w-64 h-screen p-4
+           sticky top-0 flex flex-col space-y-2 
+           transition-transform duration-300;
+  }
+
+  /* 2. Individual Nav Item (Basic Link) */
+  .sidebar-item {
+    @apply flex items-center p-3 rounded-lg text-base font-medium
+           transition duration-150 cursor-pointer
+           hover:bg-gray-700;
+  }
+
+  /* 3. Dropdown Toggle Item (Parent that controls the collapse) */
+  .sidebar-dropdown-toggle {
+    /* Reverting to @apply sidebar-item is risky, so we apply all base utilities again
+       and add justify-between */
+    @apply flex items-center p-3 rounded-lg text-base font-medium
+           transition duration-150 cursor-pointer justify-between
+           hover:bg-gray-700;
+  }
+
+  /* 4. Dropdown Menu (The list of sub-links) */
+  .sidebar-submenu {
+    @apply ml-6 mt-1 space-y-1; 
+  }
+
+  /* 5. Submenu Item (Child Link) */
+  .submenu-item {
+    @apply block p-2 rounded-lg text-sm
+           transition duration-150 
+           hover:bg-gray-700;
+  }
+
+  /* Style for the active/selected item */
+  .is-active {
+    @apply bg-green-600 hover:bg-green-700 text-white;
+  }
+
+  /* Style for the chevron/icon when the menu is open */
+  .chevron-rotated {
+    @apply transform rotate-90 transition duration-200;
+  }
+}
+
+
+/* ----------------------------------------------------------------- */
+/* ACCOUNT & PROFILE PAGE STYLES */
+/* ----------------------------------------------------------------- */
+
+.profile-section {
+  @apply bg-white rounded-lg shadow-md p-6 mb-6;
+}
+
+.user-avatar-large {
+  @apply w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600;
+  @apply text-white flex items-center justify-center text-3xl font-bold;
+}
+
+.profile-header {
+  @apply flex items-center mb-6;
+}
+
+.profile-info {
+  @apply ml-4;
+}
+
+.profile-name {
+  @apply text-2xl font-semibold text-gray-900;
+}
+
+.profile-role {
+  @apply text-gray-600;
+}
+
+.form-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.form-group {
+  @apply mb-4;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-2;
+}
+
+.button-group {
+  @apply mt-6 flex gap-4;
+}
+
+.secondary-button {
+  @apply px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold;
+  @apply hover:bg-gray-300 transition duration-200;
+}
+
+.password-section {
+  @apply bg-white rounded-lg shadow-md p-6;
+}
+
+.section-title {
+  @apply text-xl font-semibold mb-4 text-gray-800;
+}
+
+
+/* ----------------------------------------------------------------- */
+/* ORDERS PAGE STYLES */
+/* ----------------------------------------------------------------- */
+
+.orders-page {
+  @apply max-w-6xl mx-auto py-8 px-4;
+}
+
+.page-title {
+  @apply text-3xl font-bold mb-6 text-gray-900;
+}
+
+.empty-state {
+  @apply bg-white rounded-lg shadow-md p-10 text-center;
+}
+
+.empty-icon {
+  @apply text-6xl mb-4;
+}
+
+.empty-title {
+  @apply text-2xl font-semibold mb-2 text-gray-800;
+}
+
+.empty-message {
+  @apply text-gray-600 mb-6;
+}
+
+.orders-list {
+  @apply space-y-6;
+}
+
+.order-card {
+  @apply bg-white rounded-lg shadow-md p-6;
+}
+
+.order-header {
+  @apply flex justify-between items-start mb-4 pb-4 border-b border-gray-200;
+}
+
+.order-id {
+  @apply text-xl font-semibold text-gray-900 mb-1;
+}
+
+.order-date {
+  @apply text-gray-600 text-sm;
+}
+
+.order-status {
+  @apply inline-block px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-pending { @apply bg-yellow-100 text-yellow-800; }
+.status-confirmed { @apply bg-indigo-100 text-indigo-800; }
+.status-preparing { @apply bg-purple-100 text-purple-800; }
+.status-ready { @apply bg-green-100 text-green-800; }
+.status-completed { @apply bg-gray-100 text-gray-800; }
+.status-cancelled { @apply bg-red-100 text-red-800; }
+
+.order-total {
+  @apply text-xl font-bold text-gray-900 mt-2;
+}
+
+.order-items {
+  @apply space-y-3 mb-4;
+}
+
+.order-item {
+  @apply flex items-center gap-4;
+}
+
+.order-item-image {
+  @apply w-16 h-16 object-cover rounded;
+}
+
+.order-item-name {
+  @apply font-semibold text-gray-900;
+}
+
+.order-item-quantity {
+  @apply text-sm text-gray-600;
+}
+
+.order-item-price {
+  @apply font-semibold text-gray-900;
+}
+
+.order-item-subtotal {
+  @apply text-sm text-gray-600;
+}
+
+.order-actions {
+  @apply flex gap-3 pt-4 border-t border-gray-200;
+}
+
+.nav-auth-link {
+  @apply text-gray-700 hover:text-green-600 font-medium transition duration-150;
+  @apply px-4 py-2 rounded-lg;
+}
+
+.nav-auth-link.primary {
+  @apply bg-green-500 text-white hover:bg-green-600;
+}
+
+
+/* ----------------------------------------------------------------- */
+/* CHECKOUT PAGE STYLES */
+/* ----------------------------------------------------------------- */
+
+.checkout-page {
+  @apply max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8;
+}
+
+.checkout-grid {
+  @apply grid gap-8 lg:grid-cols-3;
+}
+
+.checkout-main {
+  @apply lg:col-span-2;
+}
+
+.checkout-sidebar {
+  @apply lg:col-span-1;
+}
+
+.checkout-section {
+  @apply bg-white rounded-lg shadow-md p-6 mb-6;
+}
+
+.section-header {
+  @apply text-2xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200;
+}
+
+
+/* ----------------------------------------------------------------- */
+/* CART SIDEBAR STYLES */
+/* ----------------------------------------------------------------- */
+
+.cart-header {
+  @apply flex justify-between items-center mb-4;
+}
+
+.cart-title {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.cart-close-btn {
+  @apply text-gray-500 hover:text-gray-700 text-3xl font-light;
+  @apply transition duration-150 cursor-pointer;
+}
+
+.summary-title {
+  @apply text-xl font-semibold text-gray-800;
+}
+
+.checkout-btn {
+  @apply mt-4 w-full block text-center;
+}
+
+.empty-cart {
+  @apply text-center py-10 text-gray-600;
+}
+
+
+/* ================================================================= */
+/* MODERN NAVIGATION BAR - Phase 2 Component Redesign */
+/* Frappe LMS Inspired - Backdrop blur, clean, minimalist */
+/* ================================================================= */
+
+.app-navbar {
+  @apply fixed top-0 inset-x-0 z-50;
+  @apply bg-white/80 backdrop-blur-md;
+  @apply border-b border-gray-200;
+  @apply transition-all duration-300;
+}
+
+.navbar-container {
+  @apply max-w-7xl mx-auto px-6 py-4 flex justify-between items-center;
+}
+
+.navbar-left {
+  @apply flex items-center space-x-8;
+}
+
+.navbar-logo {
+  @apply text-xl font-bold text-indigo-600 hover:text-indigo-700 transition-colors;
+  @apply tracking-tight;
+}
+
+.navbar-link {
+  @apply text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors;
+  @apply relative;
+}
+
+/* Active link indicator */
+.navbar-link.router-link-active {
+  @apply text-indigo-600;
+}
+
+.navbar-link.router-link-active::after {
+  content: '';
+  @apply absolute -bottom-4 left-0 right-0 h-0.5 bg-indigo-600;
+}
+
+.navbar-right {
+  @apply relative inline-block text-left;
+}
+
+.user-dropdown-trigger {
+  @apply flex items-center space-x-2 px-3 py-2 rounded-lg;
+  @apply hover:bg-gray-100 transition-colors cursor-pointer;
+  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+}
+
+.user-initials-badge {
+  @apply inline-flex w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600;
+  @apply text-white items-center justify-center font-semibold text-sm;
+  @apply shadow-sm;
+}
+
+.user-name-text {
+  @apply font-medium text-gray-700 text-sm;
+  @apply hidden sm:block;
+}
+
+.dropdown-icon {
+  @apply w-4 h-4 text-gray-400 transition-transform;
+}
+
+.user-dropdown-trigger:hover .dropdown-icon {
+  @apply text-gray-600;
+}
+
+.user-dropdown-menu {
+  @apply absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl z-50;
+  @apply border border-gray-200 py-2;
+  @apply opacity-0 transition-opacity duration-200;
+  animation: dropdownFadeIn 200ms ease-out forwards;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-menu-item {
+  @apply block px-4 py-2.5 text-sm text-gray-700;
+  @apply hover:bg-gray-50 transition-colors;
+  @apply flex items-center space-x-2;
+}
+
+.dropdown-menu-button {
+  @apply block w-full text-left px-4 py-2.5 text-sm text-gray-700;
+  @apply hover:bg-gray-50 transition-colors;
+  @apply flex items-center space-x-2;
+}
+
+.dropdown-menu-button:last-child {
+  @apply text-red-600 hover:bg-red-50;
+}
+
+
+/* ================================================================= */
+/* MODERN HOME PAGE - Phase 2 Component Redesign */
+/* Frappe LMS Inspired - Hero section with features */
+/* ================================================================= */
+
+.modern-home {
+  @apply min-h-screen bg-gray-50;
+}
+
+/* Hero Section */
+.hero-section {
+  @apply relative overflow-hidden bg-white;
+  @apply py-20 lg:py-28;
+}
+
+.hero-content {
+  @apply max-w-7xl mx-auto px-6 text-center relative z-10;
+}
+
+.hero-badge {
+  @apply inline-flex items-center px-4 py-2 rounded-full text-sm font-medium;
+  @apply bg-indigo-100 text-indigo-800 mb-6;
+}
+
+.hero-title {
+  @apply text-5xl md:text-6xl font-bold text-gray-900 mb-6;
+  @apply tracking-tight;
+}
+
+.hero-description {
+  @apply text-xl text-gray-600 max-w-3xl mx-auto mb-10;
+  @apply leading-relaxed;
+}
+
+.hero-actions {
+  @apply flex items-center justify-center space-x-4 flex-wrap gap-y-4;
+}
+
+.hero-btn-primary {
+  @apply inline-flex items-center px-8 py-4 text-base font-semibold;
+  @apply bg-indigo-600 text-white rounded-xl;
+  @apply hover:bg-indigo-700 transition-colors duration-200;
+  @apply shadow-lg hover:shadow-xl;
+}
+
+.hero-btn-secondary {
+  @apply inline-flex items-center px-8 py-4 text-base font-semibold;
+  @apply bg-white text-gray-700 border-2 border-gray-300 rounded-xl;
+  @apply hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200;
+}
+
+.hero-gradient {
+  @apply absolute inset-0 -z-0;
+  @apply bg-gradient-to-br from-indigo-50 via-white to-purple-50;
+  @apply opacity-60;
+}
+
+/* Features Section */
+.features-section {
+  @apply py-20 bg-gray-50;
+}
+
+.features-container {
+  @apply max-w-7xl mx-auto px-6;
+}
+
+.features-header {
+  @apply text-center mb-16;
+}
+
+.features-title {
+  @apply text-3xl font-bold text-gray-900 mb-4;
+}
+
+.features-subtitle {
+  @apply text-lg text-gray-600;
+}
+
+.features-grid {
+  @apply grid md:grid-cols-3 gap-8;
+}
+
+.feature-card {
+  @apply bg-white p-8 rounded-xl border border-gray-200;
+  @apply hover:shadow-lg transition-shadow duration-200;
+}
+
+.feature-icon {
+  @apply w-12 h-12 rounded-lg flex items-center justify-center mb-4;
+}
+
+.feature-heading {
+  @apply text-xl font-semibold text-gray-900 mb-2;
+}
+
+.feature-text {
+  @apply text-gray-600;
+}
+
+
+/* ----------------------------------------------------------------- */
+/* ABOUT PAGE STYLES */
+/* ----------------------------------------------------------------- */
+
+.about-container {
+  @apply max-w-2xl mx-auto p-8 bg-white rounded shadow mt-10;
+}
+
+.about-title {
+  @apply text-3xl font-bold mb-4 text-indigo-700;
+}
+
+.about-text {
+  @apply text-lg text-gray-700;
+}
+
+
+/* ================================================================= */
+/* MODERN COURSE CARDS - Phase 2 Component Redesign */
+/* Frappe LMS Inspired - Clean cards with hover effects */
+/* ================================================================= */
+
+.filter-toggle-group {
+  @apply inline-flex rounded-lg border border-gray-300 overflow-hidden bg-gray-50;
+}
+
+.filter-toggle-button {
+  @apply px-4 py-2 text-sm font-medium bg-transparent text-gray-600;
+  @apply hover:bg-white transition-colors;
+}
+
+.filter-toggle-active {
+  @apply px-4 py-2 text-sm font-medium bg-white text-indigo-600 shadow-sm;
+}
+
+/* Modern Course Card */
+.modern-course-card {
+  @apply block bg-white rounded-xl border border-gray-200 overflow-hidden;
+  @apply transition-all duration-200;
+  @apply hover:shadow-lg hover:-translate-y-1 hover:border-indigo-200;
+}
+
+.course-card-image {
+  @apply relative overflow-hidden;
+}
+
+.course-card-image .aspect-video {
+  @apply w-full;
+}
+
+.course-description {
+  @apply max-w-none;
+}
+
+/* Text truncation */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Loading Skeleton */
+.course-card-skeleton {
+  @apply bg-white rounded-xl border border-gray-200 overflow-hidden animate-pulse;
+}
+
+.course-card-skeleton::before {
+  content: '';
+  @apply block aspect-video bg-gray-200;
+}
+
+.course-card-skeleton::after {
+  content: '';
+  @apply block h-32 bg-gray-100 mt-4 mx-6 mb-6 rounded;
+}
+
+
+/* ================================================================= */
+/* MODERN COURSE DETAIL PAGE - Phase 3 Enhanced Layouts */
+/* Frappe LMS Inspired - Immersive header, clean modules */
+/* ================================================================= */
+
+.modern-course-detail {
+  @apply min-h-screen bg-gray-50;
+}
+
+.modern-course-header {
+  @apply bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700;
+  @apply relative overflow-hidden;
+}
+
+.modern-course-header::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent;
+}
+
+.course-header-title {
+  @apply text-4xl font-bold mb-4;
+}
+
+.course-header-description {
+  @apply text-lg mb-6 opacity-90;
+}
+
+.course-meta-row {
+  @apply flex items-center space-x-4 mb-4;
+}
+
+.course-meta-item {
+  @apply flex items-center space-x-2;
+}
+
+.meta-icon {
+  @apply w-5 h-5;
+}
+
+.course-action-row {
+  @apply flex space-x-4;
+}
+
+.start-learning-btn {
+  @apply px-8 py-3 bg-white text-indigo-600 rounded-xl font-semibold hover:bg-gray-100 transition-colors flex items-center space-x-2;
+}
+
+.enroll-btn {
+  @apply px-8 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+}
+
+.enrolled-badge {
+  @apply px-4 py-3 bg-green-100 text-green-800 rounded-xl flex items-center space-x-2;
+}
+
+.course-content-grid {
+  @apply grid grid-cols-1 lg:grid-cols-3 gap-6;
+}
+
+.main-content-area {
+  @apply lg:col-span-2;
+}
+
+.sidebar-area {
+  @apply lg:col-span-1;
+}
+
+.section-heading {
+  @apply text-2xl font-bold mb-4;
+}
+
+.module-list-card {
+  @apply bg-white rounded-xl shadow-md;
+}
+
+.module-item-container {
+  @apply border-b last:border-b-0;
+}
+
+.module-toggle-button {
+  @apply w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors text-left;
+}
+
+.module-toggle-content {
+  @apply flex-1;
+}
+
+.module-title {
+  @apply font-semibold text-lg;
+}
+
+.module-meta {
+  @apply text-sm text-gray-600 mt-1;
+}
+
+.chevron-icon {
+  @apply w-5 h-5 text-gray-400 transition-transform;
+}
+
+.module-lessons-area {
+  @apply px-6 pb-4 bg-gray-50;
+}
+
+.lesson-list {
+  @apply space-y-2;
+}
+
+.lesson-list-item {
+  @apply flex items-center space-x-3 py-2;
+}
+
+.lesson-icon {
+  @apply w-5 h-5 text-gray-400;
+}
+
+.lesson-title-text {
+  @apply text-gray-700;
+}
+
+.sidebar-sticky-card {
+  @apply bg-white rounded-lg shadow p-6 sticky top-6;
+}
+
+.sidebar-card-title {
+  @apply font-bold text-lg mb-4;
+}
+
+.benefits-list {
+  @apply space-y-2;
+}
+
+.benefit-item {
+  @apply flex items-start space-x-2;
+}
+
+.benefit-icon {
+  @apply w-5 h-5 text-green-500 flex-shrink-0 mt-0.5;
+}
+
+.benefit-text {
+  @apply text-gray-700;
+}
+
+.reviews-section {
+  @apply mt-8;
+}
+
+.reviews-title {
+  @apply text-lg font-semibold mb-2;
+}
+
+.reviews-empty {
+  @apply text-gray-500 mb-2;
+}
+
+.reviews-list {
+  @apply space-y-2 mb-4;
+}
+
+.review-card {
+  @apply bg-white p-3 rounded shadow;
+}
+
+.review-rating {
+  @apply font-medium;
+}
+
+.review-comment {
+  @apply text-gray-700;
+}
+
+.review-timestamp {
+  @apply text-xs text-gray-500;
+}
+
+.review-form-container {
+  @apply bg-gray-50 p-4 rounded;
+}
+
+.review-form-title {
+  @apply font-semibold mb-2;
+}
+
+.review-form {
+  @apply space-y-3;
+}
+
+.review-form-group {
+  /* No styles, just a container div */
+}
+
+.review-submit-btn {
+  @apply px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors;
+}
+
+
+/* ================================================================= */
+/* MODERN LEARNING INTERFACE - Phase 1: Visual Foundation */
+/* Udemy/Coursera Inspired - Light, Clean, Distraction-Free */
+/* ================================================================= */
+
+.learn-loading-container {
+  @apply flex items-center justify-center min-h-screen bg-gray-50;
+}
+
+.learn-loading-text {
+  @apply text-gray-700 text-lg;
+}
+
+/* Main Learning Layout - 3 Column Design */
+.learn-layout {
+  @apply fixed inset-0 bg-white overflow-hidden;
+  display: grid;
+  grid-template-columns: 1fr 320px 280px;
+  gap: 0;
+}
+
+.mobile-overlay {
+  @apply fixed inset-0 bg-black/50 z-30 lg:hidden;
+}
+
+.sidebar-toggle-btn {
+  @apply fixed top-4 right-4 z-50 lg:hidden bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:bg-indigo-700 transition-colors;
+}
+
+.toggle-icon {
+  @apply w-6 h-6;
+}
+
+.content-area {
+  @apply flex flex-col overflow-hidden;
+  grid-column: 1;
+  border-right: 1px solid #e5e7eb;
+}
+
+.content-display {
+  @apply  flex-1 flex flex-col overflow-hidden p-0;
+}
+
+.video-container-area {
+  @apply bg-gray-50 flex items-center justify-center overflow-hidden;
+  width: 100%;
+  min-height: 350px;
+  max-height: 500px;
+  padding: 1rem;
+}
+
+.video-wrapper {
+  @apply w-full flex items-center justify-center;
+  max-width: 100%;
+}
+
+.video-content {
+  @apply flex items-center justify-center w-full;
+  background: #000;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Make video responsive and maintain aspect ratio */
+.video-content video,
+.video-content iframe {
+  width: 100%;
+  height: auto;
+  max-height: 540px;
+  object-fit: contain;
+  display: block;
+}
+
+.no-video-placeholder {
+  @apply text-gray-500 text-center py-20;
+}
+
+.placeholder-icon {
+  @apply w-24 h-24 mx-auto mb-4 text-gray-400;
+}
+
+.placeholder-title {
+  @apply text-lg;
+}
+
+.placeholder-subtitle {
+  @apply text-sm mt-2;
+}
+
+.notes-container {
+  @apply w-full h-full overflow-auto p-6 bg-white;
+}
+
+/* Right Features Panel */
+.features-panel {
+  @apply bg-gradient-to-br from-indigo-50 to-blue-50 border-l border-indigo-100 flex flex-col overflow-hidden;
+  grid-column: 3;
+  height: 100vh;
+  width: 280px;
+}
+
+.features-panel-content {
+  @apply flex-1 flex items-center justify-center p-6;
+}
+
+.features-placeholder {
+  @apply text-center;
+}
+
+.notes-content-wrapper {
+  @apply max-w-4xl mx-auto;
+}
+
+.notes-title {
+  @apply text-3xl font-bold mb-6 text-gray-900;
+}
+
+.tab-navigation {
+  @apply bg-white border-t border-gray-200 px-6 py-4 flex space-x-2;
+}
+
+.tab-button {
+  @apply px-6 py-3 rounded-lg font-medium transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200;
+}
+
+.tab-button-active {
+  @apply px-6 py-3 rounded-lg font-medium transition-colors bg-indigo-600 text-white shadow-sm;
+}
+
+.tab-icon-wrapper {
+  @apply flex items-center space-x-2;
+}
+
+.tab-icon {
+  @apply w-5 h-5;
+}
+
+.course-sidebar {
+  @apply bg-gray-50 border-r border-gray-200 flex flex-col overflow-hidden;
+  grid-column: 2;
+  height: 100vh;
+  width: 320px;
+  position: relative;
+}
+
+.sidebar-visible {
+  display: flex;
+}
+
+.sidebar-hidden {
+  @apply lg:flex;
+  display: none;
+}
+
+.sidebar-header {
+  @apply p-6 border-b border-gray-200 bg-white;
+}
+
+.sidebar-course-title {
+  @apply text-lg font-bold text-gray-900;
+}
+
+.sidebar-progress-text {
+  @apply text-sm text-gray-600 mt-1;
+}
+
+.progress-bar-bg {
+  @apply w-full bg-gray-200 rounded-full h-2 mt-3;
+}
+
+.progress-bar-fill {
+  @apply bg-green-500 h-2 rounded-full transition-all;
+}
+
+.sidebar-modules-area {
+  @apply py-2;
+}
+
+.sidebar-module-container {
+  @apply border-b border-gray-200;
+}
+
+.sidebar-module-toggle {
+  @apply w-full px-4 py-3 flex items-center justify-between hover:bg-gray-100 transition-colors text-left;
+}
+
+.sidebar-module-info {
+  @apply flex-1;
+}
+
+.sidebar-module-title {
+  @apply font-semibold text-gray-900;
+}
+
+.sidebar-module-progress {
+  @apply text-xs text-gray-600 mt-1;
+}
+
+.sidebar-lessons-container {
+  @apply bg-white;
+}
+
+.sidebar-lesson-button {
+  @apply w-full px-6 py-3 text-left border-l-4 transition-colors border-transparent text-gray-700 hover:bg-gray-50;
+}
+
+.sidebar-lesson-active {
+  @apply w-full px-6 py-3 text-left border-l-4 transition-colors bg-indigo-50 border-indigo-600 text-indigo-900 font-medium;
+}
+
+.lesson-button-content {
+  @apply flex items-start space-x-3;
+}
+
+.lesson-checkbox-wrapper {
+  @apply flex-shrink-0 mt-1;
+}
+
+.lesson-checkbox-checked {
+  @apply w-5 h-5 text-green-500;
+}
+
+.lesson-checkbox-unchecked {
+  @apply w-5 h-5 rounded-full border-2 border-gray-300;
+}
+
+.lesson-info {
+  @apply flex-1;
+}
+
+.lesson-button-title {
+  @apply text-sm font-medium;
+}
+
+.not-found-container {
+  @apply flex items-center justify-center min-h-screen;
+}
+
+.not-found-text {
+  @apply text-red-500 text-lg;
+}
+
+/* ================================================================= */
+/* PHASE 2: ENHANCED NAVIGATION */
+/* Previous/Next buttons, keyboard shortcuts */
+/* ================================================================= */
+
+/* Lesson Navigation Bar */
+.lesson-navigation {
+  @apply flex items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-200;
+}
+
+.nav-button {
+  @apply flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all;
+  @apply bg-white border-2 border-gray-200 text-gray-700;
+  @apply hover:border-indigo-500 hover:text-indigo-600 hover:shadow-md;
+}
+
+.nav-button:disabled {
+  @apply cursor-not-allowed opacity-50 hover:border-gray-200 hover:text-gray-700 hover:shadow-none;
+}
+
+.nav-button-next {
+  @apply flex-row;
+}
+
+.nav-button-prev {
+  @apply flex-row;
+}
+
+.lesson-position {
+  @apply flex items-center justify-center;
+}
+
+/* Keyboard Key Styling */
+.keyboard-key {
+  @apply inline-flex items-center justify-center px-3 py-1 rounded-lg;
+  @apply bg-gray-100 border border-gray-300 text-gray-700 font-mono text-sm;
+  @apply shadow-sm;
+  min-width: 2rem;
+}
+
+/* ================================================================= */
+/* PHASE 4: ENHANCED SIDEBAR */
+/* Better organization, progress, lesson info */
+/* ================================================================= */
+
+/* Lesson Type Icon */
+.lesson-type-icon {
+  @apply flex-shrink-0 mr-2;
+}
+
+/* Lesson Duration */
+.lesson-duration {
+  @apply text-xs text-gray-500 mt-0.5 flex items-center gap-1;
+}
+
+/* Module Progress Badge */
+.module-progress-badge {
+  @apply text-xs font-semibold px-2 py-0.5 rounded-full;
+  @apply bg-green-100 text-green-700;
+}
+
+/* Enhanced lesson button content */
+.lesson-button-content {
+  @apply flex items-start space-x-2 w-full;
+}
+
+/* Chevron icon for module toggle */
+.chevron-icon {
+  @apply w-5 h-5 transition-transform duration-200 flex-shrink-0;
+}
+
+/* ================================================================= */
+/* PHASE 5: CONTENT ENHANCEMENTS */
+/* Reading mode, font controls, code blocks, better typography */
+/* ================================================================= */
+
+/* Content Controls */
+.content-controls {
+  @apply flex items-center gap-3 mb-6 pb-3 border-b border-gray-200;
+}
+
+.control-btn {
+  @apply flex items-center justify-center p-2 rounded-lg;
+  @apply bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900;
+  @apply transition-all duration-200;
+}
+
+.control-btn.active {
+  @apply bg-indigo-100 text-indigo-600 border-2 border-indigo-300;
+}
+
+.font-size-controls {
+  @apply flex items-center gap-2;
+}
+
+.font-size-btn {
+  @apply w-8 h-8 flex items-center justify-center rounded-lg;
+  @apply bg-gray-100 text-gray-600 font-bold hover:bg-gray-200;
+  @apply transition-all duration-200;
+  font-size: 0.875rem;
+}
+
+.font-size-btn.medium {
+  font-size: 1rem;
+}
+
+.font-size-btn.large {
+  font-size: 1.125rem;
+}
+
+.font-size-btn.active {
+  @apply bg-indigo-600 text-white;
+}
+
+/* Reading Mode */
+.notes-container.reading-mode {
+  @apply bg-gray-50;
+}
+
+.reading-mode-content {
+  max-width: 42rem !important;
+  @apply mx-auto px-8;
+}
+
+/* Enhanced Content Typography */
+.enhanced-content {
+  @apply text-gray-800 leading-relaxed;
+}
+
+.enhanced-content :deep(h1) {
+  @apply text-3xl font-bold mt-8 mb-4 text-gray-900 border-b-2 border-gray-200 pb-2;
+}
+
+.enhanced-content :deep(h2) {
+  @apply text-2xl font-bold mt-8 mb-4 text-gray-900;
+}
+
+.enhanced-content :deep(h3) {
+  @apply text-xl font-semibold mt-6 mb-3 text-gray-900;
+}
+
+.enhanced-content :deep(h4) {
+  @apply text-lg font-semibold mt-4 mb-2 text-gray-800;
+}
+
+.enhanced-content :deep(p) {
+  @apply mb-4 text-gray-700 leading-relaxed;
+}
+
+.enhanced-content :deep(strong) {
+  @apply font-semibold text-gray-900;
+}
+
+.enhanced-content :deep(em) {
+  @apply italic text-gray-700;
+}
+
+.enhanced-content :deep(ul),
+.enhanced-content :deep(ol) {
+  @apply mb-4 ml-6 text-gray-700 space-y-2;
+}
+
+.enhanced-content :deep(li) {
+  @apply mb-2 leading-relaxed;
+}
+
+.enhanced-content :deep(ul li) {
+  @apply relative pl-2;
+}
+
+.enhanced-content :deep(ul li::before) {
+  content: "•";
+  @apply absolute left-0 text-indigo-500 font-bold;
+  margin-left: -1rem;
+}
+
+.enhanced-content :deep(ol) {
+  counter-reset: item;
+}
+
+.enhanced-content :deep(ol li) {
+  counter-increment: item;
+  @apply relative pl-2;
+}
+
+.enhanced-content :deep(ol li::before) {
+  content: counter(item) ".";
+  @apply absolute left-0 text-indigo-600 font-semibold;
+  margin-left: -1.5rem;
+}
+
+.enhanced-content :deep(a) {
+  @apply text-indigo-600 hover:text-indigo-700 underline font-medium;
+  @apply transition-colors duration-200;
+}
+
+.enhanced-content :deep(blockquote) {
+  @apply border-l-4 border-indigo-500 pl-4 italic text-gray-600 my-6;
+  @apply bg-indigo-50 py-4 pr-4 rounded-r-lg;
+}
+
+.enhanced-content :deep(img) {
+  @apply max-w-full h-auto rounded-lg my-6 shadow-lg;
+  @apply transition-transform duration-200 hover:scale-105 cursor-pointer;
+}
+
+.enhanced-content :deep(table) {
+  @apply w-full my-6 border-collapse;
+}
+
+.enhanced-content :deep(th) {
+  @apply bg-gray-100 text-gray-900 font-semibold p-3 text-left border border-gray-200;
+}
+
+.enhanced-content :deep(td) {
+  @apply p-3 border border-gray-200 text-gray-700;
+}
+
+.enhanced-content :deep(hr) {
+  @apply my-8 border-gray-300;
+}
+
+/* Code Inline */
+.enhanced-content :deep(code:not(pre code)) {
+  @apply bg-gray-100 px-2 py-1 rounded text-sm text-indigo-600 font-mono;
+  @apply border border-gray-200;
+}
+
+/* Pre and Code Blocks */
+.enhanced-content :deep(pre) {
+  @apply bg-gray-900 p-4 rounded-lg my-6 overflow-x-auto;
+  @apply border border-gray-700;
+}
+
+.enhanced-content :deep(pre code) {
+  @apply text-gray-100 font-mono text-sm;
+}
+
+
+/* ----------------------------------------------------------------- */
+/* MODULE DETAIL PAGE STYLES */
+/* ----------------------------------------------------------------- */
+
+.module-detail-title {
+  @apply text-2xl font-bold mb-2;
+}
+
+.module-detail-description {
+  @apply mb-4 text-gray-700;
+}
+
+.lessons-section-title {
+  @apply text-xl font-semibold mb-2;
+}
+
+.lesson-link-item {
+  @apply mb-2;
+}
+
+.lesson-link {
+  @apply text-indigo-600 hover:underline;
+}
+
+
+/* ----------------------------------------------------------------- */
+/* LESSON DETAIL PAGE STYLES */
+/* ----------------------------------------------------------------- */
+
+.lesson-detail-title {
+  @apply text-2xl font-bold mb-2;
+}
+
+.lesson-content-area {
+  @apply max-w-none;
+}
+
+/* Lesson content typography styling */
+.lesson-content {
+  @apply text-gray-300 leading-relaxed;
+}
+
+.lesson-content h1 {
+  @apply text-3xl font-bold mb-4 text-white;
+}
+
+.lesson-content h2 {
+  @apply text-2xl font-bold mb-3 text-white mt-6;
+}
+
+.lesson-content h3 {
+  @apply text-xl font-semibold mb-2 text-white mt-4;
+}
+
+.lesson-content p {
+  @apply mb-4;
+}
+
+.lesson-content ul, .lesson-content ol {
+  @apply mb-4 ml-6;
+}
+
+.lesson-content li {
+  @apply mb-2;
+}
+
+.lesson-content code {
+  @apply bg-gray-700 px-2 py-1 rounded text-sm text-indigo-300;
+}
+
+.lesson-content pre {
+  @apply bg-gray-700 p-4 rounded mb-4 overflow-x-auto;
+}
+
+.lesson-content a {
+  @apply text-indigo-400 hover:text-indigo-300 underline;
+}
+
+.lesson-actions {
+  @apply mt-4;
+}
+
+.mark-complete-btn {
+  @apply px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700;
+}
+
+.completed-badge {
+  @apply px-3 py-1 bg-green-100 text-green-700 rounded;
+}
+
+.enroll-notice {
+  @apply text-gray-500;
+}
+
+
+/* ----------------------------------------------------------------- */
+/* ACCOUNT PAGE STYLES */
+/* ----------------------------------------------------------------- */
+
+.account-container {
+  @apply max-w-md mx-auto mt-12 p-8 bg-white rounded shadow;
+}
+
+.account-title {
+  @apply text-2xl font-bold mb-6;
+}
+
+.account-field {
+  @apply mb-4;
+}
+
+.field-label {
+  @apply block text-gray-700 font-medium;
+}
+
+.field-value {
+  @apply block text-lg font-semibold;
+}
+
+.account-note {
+  @apply mt-4 text-gray-600;
+}
