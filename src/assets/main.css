@@ -620,17 +620,51 @@
 /* The main view container (used by LoginPage.vue and RegisterPage.vue) */
 .auth-page {
   /* Layout: full screen height, centered content */
-  @apply min-h-screen bg-gray-50 flex items-center justify-center p-4; 
+  @apply h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center p-4 overflow-auto; 
+  position: relative;
+}
+
+/* Animated background pattern */
+.auth-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Dedicated card container for the LOGIN form (max-w-md for smaller card) */
 .login-card {
-  @apply max-w-md mx-auto p-8 bg-white shadow-xl rounded-lg border border-gray-200;
+  @apply max-w-md w-full mx-auto p-8 bg-white/90 backdrop-blur-sm shadow-2xl rounded-2xl border border-gray-100;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.5s ease-out;
 }
 
 /* Dedicated card container for the REGISTER form (max-w-lg for wider card) */
 .register-card {
-  @apply max-w-lg mx-auto p-8 bg-white shadow-xl rounded-lg border border-gray-200;
+  @apply max-w-lg w-full mx-auto p-8 bg-white/90 backdrop-blur-sm shadow-2xl rounded-2xl border border-gray-100;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.5s ease-out;
+}
+
+/* Slide up animation for auth cards */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
@@ -2050,4 +2084,61 @@
 
 .account-note {
   @apply mt-4 text-gray-600;
+}
+
+
+/* ================================================================= */
+/* TOAST NOTIFICATIONS - Custom Styling */
+/* ================================================================= */
+
+/* Override vue-toastification default styles to match our design system */
+.Vue-Toastification__toast {
+  @apply rounded-xl shadow-2xl border;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 1rem 1.25rem;
+  min-height: 60px;
+}
+
+.Vue-Toastification__toast--success {
+  @apply bg-white border-green-200;
+}
+
+.Vue-Toastification__toast--error {
+  @apply bg-white border-red-200;
+}
+
+.Vue-Toastification__toast--warning {
+  @apply bg-white border-yellow-200;
+}
+
+.Vue-Toastification__toast--info {
+  @apply bg-white border-indigo-200;
+}
+
+.Vue-Toastification__toast-body {
+  @apply text-gray-800 font-medium;
+}
+
+.Vue-Toastification__progress-bar {
+  @apply h-1;
+}
+
+.Vue-Toastification__toast--success .Vue-Toastification__progress-bar {
+  @apply bg-green-500;
+}
+
+.Vue-Toastification__toast--error .Vue-Toastification__progress-bar {
+  @apply bg-red-500;
+}
+
+.Vue-Toastification__toast--warning .Vue-Toastification__progress-bar {
+  @apply bg-yellow-500;
+}
+
+.Vue-Toastification__toast--info .Vue-Toastification__progress-bar {
+  @apply bg-indigo-500;
+}
+
+.Vue-Toastification__close-button {
+  @apply text-gray-400 hover:text-gray-600;
 }

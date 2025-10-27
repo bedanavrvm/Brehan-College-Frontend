@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Set up axios instance with JWT token if available
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api/',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/',
 })
 
 let isRefreshing = false
@@ -65,7 +65,8 @@ api.interceptors.response.use(
 
       try {
         // Try to refresh the token
-        const response = await axios.post('http://localhost:8000/api/token/refresh/', {
+        const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/'
+        const response = await axios.post(`${baseURL}token/refresh/`, {
           refresh: refreshToken
         })
 

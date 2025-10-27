@@ -121,7 +121,8 @@ const startTokenRefresh = () => {
     if (!refreshToken) return
     
     try {
-      const response = await fetch('http://localhost:8000/api/token/refresh/', {
+      const apiBaseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/'
+      const response = await fetch(`${apiBaseURL}token/refresh/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refresh: refreshToken })
@@ -162,7 +163,8 @@ window.addEventListener('login-success', () => {
 const openWagtail = () => {
   const token = getToken()
   if (!token) return
-  const url = `http://localhost:8000/api/wagtail/sso/?token=${encodeURIComponent(token)}`
+  const apiBaseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/'
+  const url = `${apiBaseURL}wagtail/sso/?token=${encodeURIComponent(token)}`
   window.open(url, '_blank')
 }
 </script>
