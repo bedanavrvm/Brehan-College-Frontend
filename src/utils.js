@@ -1,8 +1,12 @@
 import axios from 'axios'
 
 // Set up axios instance with JWT token if available
+// const api = axios.create({
+//   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/',
+// })
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/',
+  baseURL:'http://localhost:8000/api/',
 })
 
 let isRefreshing = false
@@ -54,18 +58,20 @@ api.interceptors.response.use(
       const refreshToken = localStorage.getItem('refreshToken') || sessionStorage.getItem('refreshToken')
       
       if (!refreshToken) {
-        // No refresh token, log out user
+        // No refresh token: treat as unauthenticated. Do not hard-redirect from public pages.
         localStorage.removeItem('token')
         localStorage.removeItem('refreshToken')
         sessionStorage.removeItem('token')
         sessionStorage.removeItem('refreshToken')
-        window.location.href = '/login'
+        // Just reject and let the caller decide (public pages should remain accessible)
         return Promise.reject(error)
       }
 
       try {
         // Try to refresh the token
-        const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/'
+        // const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/'
+
+        const baseURL ='http://localhost:8000/api/'
         const response = await axios.post(`${baseURL}token/refresh/`, {
           refresh: refreshToken
         })
@@ -92,12 +98,11 @@ api.interceptors.response.use(
         processQueue(refreshError, null)
         isRefreshing = false
         
-        // Refresh failed, log out user
+        // Refresh failed: clear tokens, but don't force redirect. Let route logic decide.
         localStorage.removeItem('token')
         localStorage.removeItem('refreshToken')
         sessionStorage.removeItem('token')
         sessionStorage.removeItem('refreshToken')
-        window.location.href = '/login'
         
         return Promise.reject(refreshError)
       }

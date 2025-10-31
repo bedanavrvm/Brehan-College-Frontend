@@ -263,6 +263,13 @@ const enroll = async () => {
   console.log('drfCourseId:', drfCourseId.value)
   console.log('route.params.id:', route.params.id)
   
+  // If not authenticated, redirect to login before attempting enrollment
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token')
+  if (!token) {
+    router.push({ path: '/login', query: { next: `/courses/${route.params.id}` } })
+    return
+  }
+
   if (!drfCourseId.value) {
     console.error('Cannot enroll: drfCourseId is not set. The course may not have a corresponding DRF course.')
     alert('Unable to enroll at this time. Please try refreshing the page.')

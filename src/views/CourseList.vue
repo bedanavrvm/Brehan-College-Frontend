@@ -102,6 +102,13 @@ onMounted(async () => {
 })
 
 const detectRole = async () => {
+  // Attempt to detect role only if a token exists; otherwise, keep page public
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token')
+  if (!token) {
+    isTeacher.value = false
+    username.value = ''
+    return
+  }
   try {
     const me = await api.get('me/')
     isTeacher.value = (me.data.role || '').toLowerCase() === 'teacher' || (me.data.role || '').toLowerCase() === 'staff'

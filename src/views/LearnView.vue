@@ -129,15 +129,6 @@
             </div>
           </div>
 
-          <div v-else-if="activeTab === 'assignment'" class="notes-container">
-            <div class="notes-content-wrapper" style="text-align: center;">
-              <svg class="placeholder-icon" style="width: 6rem; height: 6rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-              </svg>
-              <h2 class="notes-title" style="font-size: 1.5rem;">Assignments</h2>
-              <p class="placeholder-subtitle" style="color: #9ca3af;">Assignment feature coming soon</p>
-            </div>
-          </div>
         </div>
 
         <!-- Previous/Next Navigation -->
@@ -206,17 +197,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
               <span>Quiz</span>
-            </span>
-          </button>
-          <button
-            @click="activeTab = 'assignment'"
-            :class="activeTab === 'assignment' ? 'tab-button-active' : 'tab-button'"
-          >
-            <span class="tab-icon-wrapper">
-              <svg class="tab-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-              </svg>
-              <span>Assignment</span>
             </span>
           </button>
         </div>
