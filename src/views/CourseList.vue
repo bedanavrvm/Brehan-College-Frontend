@@ -53,9 +53,10 @@
           class="modern-course-card card-interactive card-glow animate-fade-in"
           :style="{ animationDelay: `${index * 0.05}s` }"
         >
-          <!-- Course Image Placeholder -->
+          <!-- Course Image -->
           <div class="course-card-image">
-            <div class="aspect-video bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500"></div>
+            <img v-if="course.course_image_url" :src="course.course_image_url" :alt="course.title" class="w-full h-48 object-cover">
+            <div v-else class="aspect-video bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500"></div>
           </div>
           
           <!-- Course Content -->

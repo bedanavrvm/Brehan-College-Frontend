@@ -26,9 +26,9 @@
               
               <!-- Course Stats -->
               <div class="flex items-center space-x-6 text-sm text-indigo-200">
-                <div class="flex items-center">
+                <div v-if="course.modules" class="flex items-center">
                   <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
                   </svg>
                   <span>{{ course.modules.length }} Modules</span>
                 </div>
@@ -112,7 +112,7 @@
       <div class="bg-gray-50 py-12">
         <div class="max-w-7xl mx-auto px-6">
           <h2 class="text-2xl font-bold text-gray-900 mb-6">Course Content</h2>
-          <div class="space-y-3">
+          <div v-if="course.modules && course.modules.length > 0" class="space-y-3">
             <div v-for="(module, index) in course.modules" :key="module.id" class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-indigo-200 transition-colors">
               <button
                 @click="toggleModule(index)"
@@ -145,6 +145,7 @@
               </div>
             </div>
           </div>
+          <div v-else class="text-gray-600 mt-4">No modules available for this course.</div>
         </div>
       </div>
 
@@ -202,7 +203,7 @@ const newReview = ref({ rating: 5, comment: '' })
 const expandedModules = ref({})
 
 const totalLessons = computed(() => {
-  if (!course.value) return 0
+  if (!course.value || !course.value.modules) return 0
   return course.value.modules.reduce((sum, module) => sum + module.lessons.length, 0)
 })
 
@@ -215,9 +216,18 @@ const startCourse = () => {
 }
 
 onMounted(async () => {
-  console.log('CourseDetail mounted, loading course:', route.params.id)
+  const courseId = route.params.id
+  console.log('CourseDetail mounted, loading course:', courseId)
+
+  if (!courseId) {
+    console.error('Course ID is undefined in route parameters.')
+    course.value = null
+    loading.value = false
+    return
+  }
+
   try {
-    const res = await api.get(`cms/courses/${route.params.id}/`)
+    const res = await api.get(`cms/courses/${courseId}/`)
     course.value = res.data
     console.log('Course loaded:', course.value)
     
@@ -225,8 +235,13 @@ onMounted(async () => {
     try {
       console.log('Fetching DRF course ID...')
       const drfRes = await api.get(`courses/by-cms/${route.params.id}/`)
-      drfCourseId.value = drfRes.data.id
-      console.log('DRF Course ID:', drfCourseId.value)
+      if (drfRes.data && drfRes.data.id) {
+        drfCourseId.value = drfRes.data.id
+        console.log('DRF Course ID:', drfCourseId.value)
+      } else {
+        console.warn('DRF Course ID not found in response data:', drfRes.data)
+        drfCourseId.value = null // Explicitly set to null if not found
+      }
       
       await Promise.all([
         loadEnrollmentStatus(),

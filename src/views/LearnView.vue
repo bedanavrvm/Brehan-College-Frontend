@@ -129,6 +129,36 @@
             </div>
           </div>
 
+          <!-- Slides Tab Content -->
+          <div v-else-if="activeTab === 'slides'" class="slides-area">
+            <div v-if="currentLesson && currentLesson.slides_content && currentLesson.slides_content.length">
+              <div v-for="(slideBlock, index) in currentLesson.slides_content" :key="index" class="slide-item">
+                <template v-if="slideBlock.value">
+                  <h3 v-if="slideBlock.value.document && slideBlock.value.document.title">{{ slideBlock.value.document.title }}</h3>
+                  <div v-if="slideBlock.value.document && slideBlock.value.document.url">
+                    <template v-if="isPdf(slideBlock.value.document.url)">
+                      <iframe :src="slideBlock.value.document.url" class="slide-iframe" frameborder="0"></iframe>
+                    </template>
+                    <template v-else-if="isPowerPoint(slideBlock.value.document.url)">
+                      <iframe :src="getOfficeWebViewerUrl(slideBlock.value.document.url)" class="slide-iframe" frameborder="0"></iframe>
+                    </template>
+                    <template v-else>
+                      <a :href="slideBlock.value.document.url" target="_blank" rel="noopener noreferrer" class="download-link">
+                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        Download {{ slideBlock.value.document.title || 'Slide Document' }}
+                      </a>
+                    </template>
+                  </div>
+                  <p v-else>No slide document available.</p>
+                </template>
+                <p v-else>Invalid slide data.</p>
+              </div>
+            </div>
+            <p v-else class="notes-content-wrapper" style="text-align: center; color: #9ca3af;">No slides available for this lesson.</p>
+          </div>
+
         </div>
 
         <!-- Previous/Next Navigation -->
@@ -197,6 +227,17 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
               <span>Quiz</span>
+            </span>
+          </button>
+          <button
+            @click="activeTab = 'slides'"
+            :class="activeTab === 'slides' ? 'tab-button-active' : 'tab-button'"
+          >
+            <span class="tab-icon-wrapper">
+              <svg class="tab-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h6a2 2 0 012 2v10a2 2 0 01-2 2h-6a2 2 0 01-2-2v-2m0-4h.01M12 12h.01"/>
+              </svg>
+              <span>Slides</span>
             </span>
           </button>
         </div>
@@ -408,6 +449,27 @@ const enrollmentId = ref(null)
 const sidebarOpen = ref(true)
 const selectedQuiz = ref(null)
 const showKeyboardHelp = ref(false)
+
+// Helper functions for slide display
+const getFileExtension = (url) => {
+  const parts = url.split('.')
+  return parts.length > 1 ? parts.pop().toLowerCase() : ''
+}
+
+const isPdf = (url) => {
+  return getFileExtension(url) === 'pdf'
+}
+
+const isPowerPoint = (url) => {
+  const ext = getFileExtension(url)
+  return ext === 'ppt' || ext === 'pptx'
+}
+
+const getOfficeWebViewerUrl = (docUrl) => {
+  // Microsoft Office Web Viewer URL for embedding documents
+  // Ensure the docUrl is absolute and publicly accessible
+  return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(docUrl)}`
+}
 
 // Phase 3: Video Player Enhancements
 const videoElement = ref(null)
@@ -914,5 +976,33 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+/* Slides Area */
+.slides-area {
+  @apply p-6 flex flex-col gap-8;
+  flex-grow: 1;
+  overflow-y: auto; /* Enable scrolling for multiple slides */
+}
+
+.slide-item {
+  @apply bg-gray-50 rounded-lg p-6 shadow-sm border border-gray-200;
+}
+
+.slide-item h3 {
+  @apply text-xl font-semibold text-gray-800 mb-4;
+}
+
+.slide-iframe {
+  @apply w-full rounded-md border border-gray-300;
+  min-height: 600px; /* Ensure iframe has a decent height */
+}
+
+.download-link {
+  @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+}
+
+.download-link svg {
+  @apply -ml-1 mr-2 h-5 w-5;
 }
 </style>
