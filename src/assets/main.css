@@ -3,628 +3,91 @@
 @tailwind utilities;
 
 /* ===================================================================
-   BREHAN PLATFORM DESIGN SYSTEM - Phases 1-4 Complete
+   BREHAN PLATFORM DESIGN SYSTEM - OPTIMIZED v2.0
    Frappe LMS Inspired - Modern, Clean, Minimalist Design
-   Phase 4: Micro-Interactions & Animations Added
    =================================================================== */
 
+/* ===================================================================
+   CSS CUSTOM PROPERTIES (VARIABLES)
+   =================================================================== */
 @layer base {
-  /* Apply Inter font globally + improved readability */
-  * {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-  
-  body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  html {
-    scroll-behavior: smooth;
-  }
-}
-
-/* ================================================================= */
-/* PHASE 4: MICRO-INTERACTIONS & ANIMATIONS */
-/* Subtle animations that add polish and delight */
-/* ================================================================= */
-
-/* Smooth Transitions */
-@layer utilities {
-  .transition-smooth {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .transition-bounce {
-    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-}
-
-/* Button Hover Effects */
-.btn-hover-lift {
-  @apply transition-all duration-200;
-}
-
-.btn-hover-lift:hover {
-  @apply transform -translate-y-0.5 shadow-lg;
-}
-
-.btn-hover-scale {
-  @apply transition-transform duration-200;
-}
-
-.btn-hover-scale:hover {
-  @apply scale-105;
-}
-
-/* Card Interaction Effects */
-.card-interactive {
-  @apply transition-all duration-300;
-}
-
-.card-interactive:hover {
-  @apply transform -translate-y-1 shadow-xl;
-}
-
-.card-glow:hover {
-  box-shadow: 0 10px 40px -10px rgba(79, 70, 229, 0.3);
-}
-
-/* Fade In Animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out;
-}
-
-/* Slide In Animation */
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.animate-slide-in {
-  animation: slideInRight 0.4s ease-out;
-}
-
-/* Pulse Animation for Notifications */
-@keyframes pulse-subtle {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Shimmer Effect for Loading */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, #f3f4f6 0%, #e5e7eb 50%, #f3f4f6 100%);
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite;
-}
-
-/* Focus Ring Animation */
-.focus-ring-animated {
-  @apply transition-all duration-200;
-}
-
-.focus-ring-animated:focus {
-  @apply ring-2 ring-indigo-500 ring-offset-2;
-  animation: pulse-ring 0.6s ease-out;
-}
-
-@keyframes pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7);
-  }
-  100% {
-    box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
-  }
-}
-
-/* --- CORE PAGE LAYOUTS --- */
-
-/* Full screen page container for all main views */
-.page-container {
-  @apply min-h-screen bg-gray-50 pt-24 pb-4 sm:pb-6 lg:pb-8 px-4 sm:px-6 lg:px-8;
-}
-
-/* src/assets/main.css (Home Page/Landing Page Components) */
-
-/* ----------------------------------------------------------------- */
-/* 1. NAVIGATION BAR (Used for primary site navigation) */
-/* ----------------------------------------------------------------- */
-
-.main-nav {
-  /* Layout: Full width, fixed height, background, and flex container */
-  @apply sticky top-0 z-50 bg-white shadow-md p-4 flex justify-between items-center;
-
-  /* Logo Link */
-  & .nav-logo {
-    @apply text-xl font-bold text-green-600;
-  }
-
-  /* Navigation Links Wrapper (For desktop links) */
-  & .nav-links {
-    @apply hidden md:flex space-x-6;
-  }
-
-  /* Individual Navigation Links (e.g., Home, Login) */
-  & a {
-    @apply text-gray-700 hover:text-green-600 font-medium transition duration-150;
-  }
-}
-
-/* User Menu Dropdown (in Navbar) */
-.user-menu-button {
-  /* Layout and appearance */
-  @apply flex items-center space-x-2 cursor-pointer;
-}
-
-.user-avatar {
-  /* Circle with initials */
-  @apply w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-sm;
-}
-
-.user-menu-button span {
-  /* User name text */
-  @apply text-gray-800 font-medium text-sm hidden sm:block;
-}
-
-.user-menu-dropdown {
-  /* Positioning and appearance */
-  @apply absolute right-0 mt-2 w-48 bg-white rounded-md shadow-xl z-50 py-1;
-  @apply border border-gray-200;
-}
-
-.user-menu-item {
-  /* Individual links/buttons in the dropdown */
-  @apply block px-4 py-2 text-sm text-gray-700;
-  @apply hover:bg-gray-100 transition duration-150;
-}
-
-/* Cart icon button specific styles */
-.cart-icon-button {
-  @apply relative;
-  /* Badge positioning */
-  & .badge { @apply absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center; }
-}
-
-/* ----------------------------------------------------------------- */
-/* 2. HERO SECTION (Main introductory block) */
-/* ----------------------------------------------------------------- */
-
-.hero-section {
-  /* Layout: Large vertical padding/height, center content */
-  @apply py-20 text-center bg-gray-50;
-
-  /* Main Headline (H1) */
-  & h1 {
-    @apply text-5xl font-extrabold text-gray-900 mb-4;
-  }
-
-  /* Subtitle/Subhead (P tag) */
-  & p {
-    @apply text-xl text-gray-600 max-w-3xl mx-auto mb-8;
-  }
-
-  /* Button Wrapper (To center multiple CTAs if needed) */
-  & .hero-actions {
-    @apply flex justify-center space-x-4;
-  }
-}
-
-
-/* ----------------------------------------------------------------- */
-/* 3. FEATURE SECTION (The existing menu grid structure) */
-/* ----------------------------------------------------------------- */
-
-.feature-section {
-    /* Apply standard section padding */
-    @apply py-12; 
+  :root {
     
-    /* Nest the existing .menu-grid for content layout */
+    /* Color System */
+    --color-primary: theme('colors.indigo.600');
+    --color-primary-hover: theme('colors.indigo.700');
+    --color-primary-light: theme('colors.indigo.50');
+    --color-secondary: theme('colors.gray.600');
+    --color-success: theme('colors.green.500');
+    --color-success-hover: theme('colors.green.600');
+    --color-danger: theme('colors.red.500');
+    --color-warning: theme('colors.yellow.500');
+    --color-info: theme('colors.blue.500');
     
-    /* Section Heading (H2) */
-    & h2 {
-        @apply text-3xl font-bold text-center text-gray-800 mb-8;
-    }
-}
-
-.menu-grid {
-  @apply max-w-6xl mx-auto ; /* Added for centering within the section */
-  @apply grid gap-6;
-  @apply grid-cols-1; 
-  @apply md:grid-cols-2; 
-  @apply lg:grid-cols-3;
-  @apply overflow-visible;
-}
-
-
-/* ----------------------------------------------------------------- */
-/* 4. SITE FOOTER */
-/* ----------------------------------------------------------------- */
-
-.site-footer {
-  /* Layout: Background, padding, text style */
-  @apply z-50 bg-gray-800 text-gray-300 p-8 mt-12 fixed bottom-0 left-0 right-0;
-
-  /* Inner container to constrain content width */
-  & .footer-content {
-    @apply max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center;
+    /* Background Colors */
+    --bg-primary: theme('colors.white');
+    --bg-secondary: theme('colors.gray.50');
+    --bg-tertiary: theme('colors.gray.100');
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+    
+    /* Text Colors */
+    --text-primary: theme('colors.gray.900');
+    --text-secondary: theme('colors.gray.700');
+    --text-muted: theme('colors.gray.600');
+    --text-light: theme('colors.gray.500');
+    
+    /* Spacing */
+    --spacing-section: 5rem;
+    --spacing-card: 1.5rem;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Layout Dimensions */
+    --content-width: 940px;
+    --sidebar-width: 320px;
+    --sidebar-narrow: 280px;
+    --max-width-prose: 42rem;
+    
+    /* Border Radius */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 150ms;
+    --transition-base: 200ms;
+    --transition-smooth: 300ms;
+    --transition-slow: 500ms;
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    
+    /* Z-Index Scale */
+    --z-base: 1;
+    --z-dropdown: 50;
+    --z-sticky: 100;
+    --z-fixed: 200;
+    --z-modal: 300;
+    --z-popover: 400;
+    --z-tooltip: 500;
   }
-
-  /* Copyright text */
-  & .copyright-text {
-    @apply text-sm;
-  }
-
-  /* Link Wrapper */
-  & .footer-links {
-    @apply flex space-x-4 mt-4 md:mt-0;
-  }
-
-  /* Footer Links */
-  & a {
-    @apply hover:text-green-500 transition duration-150 text-sm;
-  }
-}
-
-/* ----------------------------------------------------------------- */
-/* 5. REUSABLE CTA BUTTON (Primary Call to Action) */
-/* ----------------------------------------------------------------- */
-
-.cta-button {
-    /* Appearance, size, padding, and hover */
-    @apply bg-green-500 text-white font-semibold py-3 px-6 rounded-full transition duration-200;
-    @apply hover:bg-green-600 shadow-lg;
-}
-
-
-
-/* src/assets/main.css (Menu Card Component) */
-
-/* ----------------------------------------------------------------- */
-/* MENU CARD COMPONENT */
-/* ----------------------------------------------------------------- */
-
-.menu-card {
-  /* Container Styling */
-  @apply  bg-white rounded-xl shadow-lg transition-transform duration-300 relative;
   
-  /* Hover Effect */
-  @apply hover:shadow-xl hover:scale-[1.02];
-
-  /* 1. Image Block (applied to the <img> tag or image wrapper) */
-  & .card-image {
-    /* Ensures the image fills the space but maintains aspect ratio */
-    @apply w-full h-48 object-cover;
-  }
-
-  /* 2. Content Body Wrapper */
-  & .card-body {
-    @apply p-6;
-  }
-
-  /* 3. Dish Title (e.g., <h2>) */
-  & h2 {
-    @apply text-xl font-bold text-gray-900 mb-2;
-  }
-
-  /* 4. Description/Price (e.g., <p>) */
-  & p {
-    @apply text-gray-600 mb-4;
-  }
-
-  /* 5. Action Button (Can reuse .cta-button or create a small one) */
-  & .card-action {
-    /* Small, dense button specifically for the card */
-    @apply inline-block bg-green-500 text-white font-semibold py-2 px-4 rounded-full text-sm;
-    @apply hover:bg-green-600 transition duration-200;
-  }
-
-  & .card-footer {
-    @apply flex justify-between items-center mt-4;
-  }
-
-  /* Popup card styling — consistent with your main.css design */
-  & .popup-card {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #1e1e1e;
-    color: white;
-    border: 1px solid #333;
-    border-radius: 0.75rem;
-    padding: 1rem;
-    width: 18rem;
-    z-index: 71;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-    margin-top: 0.5rem;
+  /* Dark Mode Variables */
+  .dark .auth-page {
+  @apply from-gray-900 via-gray-800 to-gray-900;
 }
 
-/* Simple fade-scale animation */
-.fade-scale-enter-active,
-.fade-scale-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.fade-scale-enter-from,
-.fade-scale-leave-to {
-  opacity: 0;
-  /* 🛑 CHANGE: Start position is slightly higher, making it slide down */
-  transform: translateY(-10px) translateX(-50%);
-}
-/* State during transition and when finished */
-.fade-scale-enter-to,
-.fade-scale-leave-from {
-  opacity: 1;
-  /* End position is the original centered position */
-  transform: translateY(0) translateX(-50%);
-}
-
-}
-
-
-
-/* src/assets/main.css (Order/Checkout Page Components) */
-
-/* ----------------------------------------------------------------- */
-/* 1. ORDER PAGE LAYOUT */
-/* ----------------------------------------------------------------- */
-
-/* Main container for the order view (applies padding and centers the content) */
-.order-page {
-  @apply max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8;
-}
-
-/* Container for the two-column checkout layout (Cart Items on left, Summary on right) */
-.checkout-layout {
-  /* Responsive grid layout */
-  @apply grid gap-10 lg:grid-cols-3;
-}
-
-/* Left column (Cart Items List) */
-.cart-list-container {
-  /* Takes up 2/3 space on large screens */
-  @apply lg:col-span-2; 
-}
-
-
-/* ----------------------------------------------------------------- */
-/* 2. ORDER SUMMARY CARD (Right Column) */
-/* ----------------------------------------------------------------- */
-
-.summary-card {
-  /* Styling for the card container */
-  @apply bg-white p-6 shadow-xl rounded-lg border border-gray-100 h-fit sticky top-20; 
-
-  /* Title */
-  & h2 {
-    @apply text-2xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200;
-  }
-
-  /* Summary Row (e.g., Subtotal, Tax) */
-  & .summary-row {
-    @apply flex justify-between text-base text-gray-700 py-1;
-  }
-
-  /* Total Row (The final calculation) */
-  & .total-row {
-    @apply flex justify-between font-bold text-xl mt-4 pt-4 border-t-2 border-green-500;
-  }
-}
-
-
-/* ----------------------------------------------------------------- */
-/* 3. CART ITEM ROW (List of Items) */
-/* ----------------------------------------------------------------- */
-
-.cart-item-row {
-  /* Row Layout */
-  @apply flex items-center justify-between py-4 border-b border-gray-200; 
-
-  /* Item Info Container (Image, Name, Price) */
-  & .item-details {
-    @apply flex items-center space-x-4 w-1/2;
-  }
-
-  /* Item Image */
-  & .item-image {
-    @apply w-16 h-16 object-cover rounded-md;
-  }
-
-  /* Item Name/Title */
-  & h3 {
-    @apply text-lg font-medium text-gray-800;
-  }
-
-  /* Quantity Controls Wrapper */
-  & .qty-controls {
-    @apply flex items-center space-x-3;
-  }
-
-  /* Quantity Button (e.g., plus/minus) */
-  & button {
-    @apply bg-gray-200 text-gray-700 w-8 h-8 rounded-full hover:bg-gray-300 transition;
-  }
-
-  /* Price/Subtotal Display */
-  & .item-price {
-    @apply font-semibold text-lg text-gray-900;
-  }
-}
-
-  /* Sidebar transitions */
-  & .cart-sidebar {
-    @apply fixed top-20 right-0 w-96 h-full bg-white shadow-2xl z-50 p-6 overflow-y-auto transition-transform duration-500;
-    
-}
-
-  & .item-subtotal {
-    @apply font-semibold text-green-500 text-right w-24;
-}
-
-
-  & .details-modal {
-    @apply absolute top-24 left-1/2 transform -translate-x-1/2;
-    @apply flex items-start justify-center z-40;
-}
-
-  & .details-content {
-    @apply bg-white p-6 rounded-2xl shadow-2xl w-11/12 sm:w-2/3 lg:w-1/2 max-h-[85vh] overflow-y-auto;
-    @apply border border-gray-200;
-    animation: fadeInUp 0.3s ease-in-out;
-}
-
-/* ✅ Add subtle fade-in animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.cart-sidebar.is-visible {
-    /* Brings the element back to its original position (0 movement) */
-    transform: translateX(0); 
-}
-
-
-/* src/assets/main.css (Payment Page Components) */
-
-/* ----------------------------------------------------------------- */
-/* 1. PAYMENT PAGE LAYOUT */
-/* ----------------------------------------------------------------- */
-
-/* Main container for the payment view (similar to order-page but specific) */
-.payment-page {
-  @apply max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8;
-}
-
-/* ----------------------------------------------------------------- */
-/* 2. PAYMENT METHOD SELECTION */
-/* ----------------------------------------------------------------- */
-
-/* Container for grouping payment method options */
-.payment-methods-group {
-  @apply mb-8;
-}
-
-/* Individual radio/checkbox option for a payment method */
-.method-option {
-  /* Layout and appearance */
-  @apply p-4 border border-gray-300 rounded-lg mb-3 cursor-pointer transition-all duration-200;
-  @apply hover:border-green-500 flex items-center justify-between;
-}
-
-/* Style for the selected method */
-.method-option.is-selected {
-  @apply border-green-600 ring-2 ring-green-200 bg-green-50;
-}
-
-
-/* ----------------------------------------------------------------- */
-/* 3. CARD FORM FIELDS (Specific Inputs) */
-/* ----------------------------------------------------------------- */
-
-/* Container for grouping card fields (like name, number, expiration) */
-.card-details-group {
-  @apply grid grid-cols-1 gap-6 sm:grid-cols-2;
-}
-
-/* Used for the section that requires two fields side-by-side (Expiry/CVV) */
-.form-split-row {
-  @apply grid grid-cols-2 gap-4;
-}
-
-/* ----------------------------------------------------------------- */
-/* 4. PAYMENT CONFIRMATION / FOOTER */
-/* ----------------------------------------------------------------- */
-
-/* Final section wrapper for totals and the final button */
-.payment-summary-footer {
-  @apply mt-10 pt-6 border-t-2 border-gray-200;
-}
-
-/* The final text for the confirmation (reusing .total-row from OrderPage) */
-.payment-summary-footer .total-row {
-  @apply mb-6; /* Adds space before the button */
-}
-
-/* The final button (reusing .primary-button from Auth pages) */
-.payment-summary-footer .primary-button {
-  @apply py-3; /* Make the final button slightly taller */
-}
-
-/* src/assets/main.css (Final Auth Section) */
-/* ----------------------------------------------------------------- */
-/* 1. CORE REUSABLE UTILITIES (Used by all forms) */
-/* ----------------------------------------------------------------- */
-
-/* Style for the actual <input>, <select>, or <textarea> field */
-.form-input {
-  /* Dimensions and Appearance */
-  @apply w-full p-3 border border-gray-300 rounded-lg;
-  /* Focus States (The green ring/border effect) */
-  @apply focus:ring-green-500 focus:border-green-500;
-}
-
-/* Style for the main action button */
-.primary-button {
-  /* Layout and Colors */
-  @apply w-full py-3 rounded-xl font-semibold;
-  /* Appearance and Hover State */
-  @apply bg-indigo-600 text-white hover:bg-indigo-700 transition-colors duration-200;
-  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
-}
-
-
-/* ----------------------------------------------------------------- */
-/* 2. PAGE & CARD LAYOUTS (The Containers) */
-/* ----------------------------------------------------------------- */
-
-/* The main view container (used by LoginPage.vue and RegisterPage.vue) */
-.auth-page {
-  /* Layout: full screen height, centered content */
-  @apply h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center p-4 overflow-auto; 
-  position: relative;
-}
-
-/* Animated background pattern */
 .auth-page::before {
   content: '';
   position: absolute;
@@ -639,152 +102,35 @@
   z-index: 0;
 }
 
-/* Dedicated card container for the LOGIN form (max-w-md for smaller card) */
-.login-card {
-  @apply max-w-md w-full mx-auto p-8 bg-white/90 backdrop-blur-sm shadow-2xl rounded-2xl border border-gray-100;
-  position: relative;
-  z-index: 1;
-  animation: slideInUp 0.5s ease-out;
-}
-
-/* Dedicated card container for the REGISTER form (max-w-lg for wider card) */
+.login-card,
 .register-card {
-  @apply max-w-lg w-full mx-auto p-8 bg-white/90 backdrop-blur-sm shadow-2xl rounded-2xl border border-gray-100;
+  @apply mx-auto p-8 shadow-2xl border border-gray-100;
+  @apply bg-white/90 backdrop-blur-sm;
+  border-radius: var(--radius-xl);
   position: relative;
-  z-index: 1;
+  z-index: var(--z-base);
   animation: slideInUp 0.5s ease-out;
 }
 
-/* Slide up animation for auth cards */
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.login-card {
+  @apply max-w-md w-full;
 }
 
-
-/* --- 1. ALERT/MESSAGE BOXES --- */
-
-/* Base style for all alerts */
-.app-alert {
-  /* Heavy @apply usage for all styling, including spacing and shape */
-  @apply flex items-center p-4 rounded-lg shadow-md space-x-3 text-sm;
+.register-card {
+  @apply max-w-lg w-full;
 }
 
-/* Success Alert (Green) */
-.alert-success {
-  @apply bg-green-100 text-green-700 border border-green-300;
+.dark .login-card,
+.dark .register-card {
+  @apply bg-gray-900/90 border-gray-700;
 }
 
-/* Error Alert (Red) */
-.alert-error {
-  @apply bg-red-100 text-red-700 border border-red-300;
-}
-
-/* Info Alert (Indigo) */
-.alert-info {
-  @apply bg-indigo-100 text-indigo-700 border border-indigo-300;
-}
-
-
-/* --- 2. FORM STATES (DISABLED/LOADING) --- */
-
-/* Disabled state for the primary button */
-.primary-button.is-disabled {
-  @apply opacity-50 cursor-not-allowed;
-
-  /* Override the default hover to maintain the disabled appearance */
-  &:hover {
-    @apply bg-green-600; /* Reverts hover to base color */
-  }
-}
-
-/* Disabled state for form inputs/selects (assuming a base .form-input exists) */
-.form-input.is-disabled {
-  @apply bg-gray-100 text-gray-500 cursor-not-allowed;
-
-  /* Explicitly remove focus styles */
-  &:focus {
-    @apply border-gray-300 shadow-none;
-  }
-}
-
-/* Optional: Loading State */
-.is-loading {
-  @apply cursor-wait;
-}
-
-
-/* --- 3. UTILITY CONTAINER --- */
-
-.content-wrapper {
-  /* Heavy @apply usage for dimensions, margins, and padding */
-  @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
-}
-
-
-/* src/assets/main.css (Sidebar Navigation Component - ABSOLUTE FINAL AND ROBUST) */
-
-@layer components {
-  
-  /* 1. Main container for the sidebar navigation */
-  .app-sidebar {
-    @apply bg-gray-900 text-gray-200 w-64 h-screen p-4
-           sticky top-0 flex flex-col space-y-2 
-           transition-transform duration-300;
-  }
-
-  /* 2. Individual Nav Item (Basic Link) */
-  .sidebar-item {
-    @apply flex items-center p-3 rounded-lg text-base font-medium
-           transition duration-150 cursor-pointer
-           hover:bg-gray-700;
-  }
-
-  /* 3. Dropdown Toggle Item (Parent that controls the collapse) */
-  .sidebar-dropdown-toggle {
-    /* Reverting to @apply sidebar-item is risky, so we apply all base utilities again
-       and add justify-between */
-    @apply flex items-center p-3 rounded-lg text-base font-medium
-           transition duration-150 cursor-pointer justify-between
-           hover:bg-gray-700;
-  }
-
-  /* 4. Dropdown Menu (The list of sub-links) */
-  .sidebar-submenu {
-    @apply ml-6 mt-1 space-y-1; 
-  }
-
-  /* 5. Submenu Item (Child Link) */
-  .submenu-item {
-    @apply block p-2 rounded-lg text-sm
-           transition duration-150 
-           hover:bg-gray-700;
-  }
-
-  /* Style for the active/selected item */
-  .is-active {
-    @apply bg-green-600 hover:bg-green-700 text-white;
-  }
-
-  /* Style for the chevron/icon when the menu is open */
-  .chevron-rotated {
-    @apply transform rotate-90 transition duration-200;
-  }
-}
-
-
-/* ----------------------------------------------------------------- */
-/* ACCOUNT & PROFILE PAGE STYLES */
-/* ----------------------------------------------------------------- */
+/* ===================================================================
+   PROFILE & ACCOUNT
+   =================================================================== */
 
 .profile-section {
-  @apply bg-white rounded-lg shadow-md p-6 mb-6;
+  @apply card p-6 mb-6;
 }
 
 .user-avatar-large {
@@ -801,57 +147,33 @@
 }
 
 .profile-name {
-  @apply text-2xl font-semibold text-gray-900;
+  @apply text-2xl font-semibold;
+  color: var(--text-primary);
 }
 
 .profile-role {
-  @apply text-gray-600;
-}
-
-.form-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
-}
-
-.form-group {
-  @apply mb-4;
-}
-
-.form-label {
-  @apply block text-sm font-medium text-gray-700 mb-2;
-}
-
-.button-group {
-  @apply mt-6 flex gap-4;
-}
-
-.secondary-button {
-  @apply px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold;
-  @apply hover:bg-gray-300 transition duration-200;
+  color: var(--text-muted);
 }
 
 .password-section {
-  @apply bg-white rounded-lg shadow-md p-6;
+  @apply card p-6;
 }
 
-.section-title {
-  @apply text-xl font-semibold mb-4 text-gray-800;
-}
-
-
-/* ----------------------------------------------------------------- */
-/* ORDERS PAGE STYLES */
-/* ----------------------------------------------------------------- */
+/* ===================================================================
+   ORDERS & CART
+   =================================================================== */
 
 .orders-page {
   @apply max-w-6xl mx-auto py-8 px-4;
 }
 
 .page-title {
-  @apply text-3xl font-bold mb-6 text-gray-900;
+  @apply text-3xl font-bold mb-6;
+  color: var(--text-primary);
 }
 
 .empty-state {
-  @apply bg-white rounded-lg shadow-md p-10 text-center;
+  @apply card p-10 text-center;
 }
 
 .empty-icon {
@@ -859,11 +181,13 @@
 }
 
 .empty-title {
-  @apply text-2xl font-semibold mb-2 text-gray-800;
+  @apply text-2xl font-semibold mb-2;
+  color: var(--text-primary);
 }
 
 .empty-message {
-  @apply text-gray-600 mb-6;
+  @apply mb-6;
+  color: var(--text-muted);
 }
 
 .orders-list {
@@ -871,34 +195,49 @@
 }
 
 .order-card {
-  @apply bg-white rounded-lg shadow-md p-6;
+  @apply card p-6;
 }
 
 .order-header {
   @apply flex justify-between items-start mb-4 pb-4 border-b border-gray-200;
 }
 
+.dark .order-header {
+  @apply border-gray-700;
+}
+
 .order-id {
-  @apply text-xl font-semibold text-gray-900 mb-1;
+  @apply text-xl font-semibold mb-1;
+  color: var(--text-primary);
 }
 
 .order-date {
-  @apply text-gray-600 text-sm;
+  @apply text-sm;
+  color: var(--text-muted);
 }
 
 .order-status {
   @apply inline-block px-3 py-1 rounded-full text-sm font-medium;
 }
 
-.status-pending { @apply bg-yellow-100 text-yellow-800; }
-.status-confirmed { @apply bg-indigo-100 text-indigo-800; }
-.status-preparing { @apply bg-purple-100 text-purple-800; }
-.status-ready { @apply bg-green-100 text-green-800; }
-.status-completed { @apply bg-gray-100 text-gray-800; }
-.status-cancelled { @apply bg-red-100 text-red-800; }
+.order-status[data-status="pending"] { @apply bg-yellow-100 text-yellow-800; }
+.order-status[data-status="confirmed"] { @apply bg-indigo-100 text-indigo-800; }
+.order-status[data-status="preparing"] { @apply bg-purple-100 text-purple-800; }
+.order-status[data-status="ready"] { @apply bg-green-100 text-green-800; }
+.order-status[data-status="completed"] { @apply bg-gray-100 text-gray-800; }
+.order-status[data-status="cancelled"] { @apply bg-red-100 text-red-800; }
+
+/* Dark mode status badges */
+.dark .order-status[data-status="pending"] { @apply bg-yellow-900/30 text-yellow-300; }
+.dark .order-status[data-status="confirmed"] { @apply bg-indigo-900/30 text-indigo-300; }
+.dark .order-status[data-status="preparing"] { @apply bg-purple-900/30 text-purple-300; }
+.dark .order-status[data-status="ready"] { @apply bg-green-900/30 text-green-300; }
+.dark .order-status[data-status="completed"] { @apply bg-gray-700 text-gray-300; }
+.dark .order-status[data-status="cancelled"] { @apply bg-red-900/30 text-red-300; }
 
 .order-total {
-  @apply text-xl font-bold text-gray-900 mt-2;
+  @apply text-xl font-bold mt-2;
+  color: var(--text-primary);
 }
 
 .order-items {
@@ -914,38 +253,131 @@
 }
 
 .order-item-name {
-  @apply font-semibold text-gray-900;
+  @apply font-semibold;
+  color: var(--text-primary);
 }
 
-.order-item-quantity {
-  @apply text-sm text-gray-600;
+.order-item-quantity,
+.order-item-subtotal {
+  @apply text-sm;
+  color: var(--text-muted);
 }
 
 .order-item-price {
-  @apply font-semibold text-gray-900;
-}
-
-.order-item-subtotal {
-  @apply text-sm text-gray-600;
+  @apply font-semibold;
+  color: var(--text-primary);
 }
 
 .order-actions {
   @apply flex gap-3 pt-4 border-t border-gray-200;
 }
 
-.nav-auth-link {
-  @apply text-gray-700 hover:text-green-600 font-medium transition duration-150;
-  @apply px-4 py-2 rounded-lg;
+.dark .order-actions {
+  @apply border-gray-700;
 }
 
-.nav-auth-link.primary {
-  @apply bg-green-500 text-white hover:bg-green-600;
+/* Cart Items */
+.cart-item-row {
+  @apply flex items-center justify-between py-4 border-b border-gray-200;
 }
 
+.dark .cart-item-row {
+  @apply border-gray-700;
+}
 
-/* ----------------------------------------------------------------- */
-/* CHECKOUT PAGE STYLES */
-/* ----------------------------------------------------------------- */
+.item-details {
+  @apply flex items-center space-x-4 w-1/2;
+}
+
+.item-image {
+  @apply w-16 h-16 object-cover rounded-md;
+}
+
+.cart-item-row h3 {
+  @apply text-lg font-medium;
+  color: var(--text-primary);
+}
+
+.qty-controls {
+  @apply flex items-center space-x-3;
+}
+
+.qty-controls button {
+  @apply bg-gray-200 text-gray-700 w-8 h-8 rounded-full;
+  transition: background-color var(--transition-base);
+}
+
+.qty-controls button:hover {
+  @apply bg-gray-300;
+}
+
+.dark .qty-controls button {
+  @apply bg-gray-700 text-gray-300;
+}
+
+.dark .qty-controls button:hover {
+  @apply bg-gray-600;
+}
+
+.item-price {
+  @apply font-semibold text-lg;
+  color: var(--text-primary);
+}
+
+.item-subtotal {
+  @apply font-semibold text-right w-24;
+  color: var(--color-success);
+}
+
+/* Cart Sidebar */
+.cart-sidebar {
+  @apply fixed right-0 w-96 h-full shadow-2xl p-6 overflow-y-auto;
+  background-color: var(--bg-primary);
+  top: var(--spacing-lg);
+  z-index: var(--z-fixed);
+  transition: transform var(--transition-slow);
+}
+
+.cart-sidebar[data-visible="true"] {
+  transform: translateX(0);
+}
+
+.cart-header {
+  @apply flex justify-between items-center mb-4;
+}
+
+.cart-title {
+  @apply text-2xl font-bold;
+  color: var(--text-primary);
+}
+
+.cart-close-btn {
+  @apply text-3xl font-light cursor-pointer;
+  color: var(--text-light);
+  transition: color var(--transition-fast);
+}
+
+.cart-close-btn:hover {
+  color: var(--text-secondary);
+}
+
+.summary-title {
+  @apply text-xl font-semibold;
+  color: var(--text-primary);
+}
+
+.checkout-btn {
+  @apply mt-4 w-full block text-center;
+}
+
+.empty-cart {
+  @apply text-center py-10;
+  color: var(--text-muted);
+}
+
+/* ===================================================================
+   CHECKOUT & PAYMENT
+   =================================================================== */
 
 .checkout-page {
   @apply max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8;
@@ -964,338 +396,81 @@
 }
 
 .checkout-section {
-  @apply bg-white rounded-lg shadow-md p-6 mb-6;
+  @apply card p-6 mb-6;
 }
 
-.section-header {
-  @apply text-2xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200;
+.payment-page {
+  @apply max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8;
 }
 
-
-/* ----------------------------------------------------------------- */
-/* CART SIDEBAR STYLES */
-/* ----------------------------------------------------------------- */
-
-.cart-header {
-  @apply flex justify-between items-center mb-4;
+.payment-methods-group {
+  @apply mb-8;
 }
 
-.cart-title {
-  @apply text-2xl font-bold text-gray-900;
+.method-option {
+  @apply p-4 border border-gray-300 rounded-lg mb-3 cursor-pointer;
+  @apply flex items-center justify-between;
+  transition: all var(--transition-base);
 }
 
-.cart-close-btn {
-  @apply text-gray-500 hover:text-gray-700 text-3xl font-light;
-  @apply transition duration-150 cursor-pointer;
+.method-option:hover {
+  border-color: var(--color-success);
 }
 
-.summary-title {
-  @apply text-xl font-semibold text-gray-800;
+.method-option[data-selected="true"] {
+  @apply ring-2 ring-green-200;
+  background-color: var(--color-primary-light);
+  border-color: var(--color-success);
 }
 
-.checkout-btn {
-  @apply mt-4 w-full block text-center;
+.dark .method-option {
+  @apply border-gray-600;
 }
 
-.empty-cart {
-  @apply text-center py-10 text-gray-600;
+.dark .method-option[data-selected="true"] {
+  @apply bg-green-900/20;
 }
 
-
-/* ================================================================= */
-/* MODERN NAVIGATION BAR - Phase 2 Component Redesign */
-/* Frappe LMS Inspired - Backdrop blur, clean, minimalist */
-/* ================================================================= */
-
-.app-navbar {
-  @apply fixed top-0 inset-x-0 z-50;
-  @apply bg-white/80 backdrop-blur-md;
-  @apply border-b border-gray-200;
-  @apply transition-all duration-300;
+.card-details-group {
+  @apply grid grid-cols-1 gap-6 sm:grid-cols-2;
 }
 
-.navbar-container {
-  @apply max-w-7xl mx-auto px-6 py-4 flex justify-between items-center;
+.form-split-row {
+  @apply grid grid-cols-2 gap-4;
 }
 
-.navbar-left {
-  @apply flex items-center space-x-8;
+.payment-summary-footer {
+  @apply mt-10 pt-6 border-t-2 border-gray-200;
 }
 
-.navbar-logo {
-  @apply text-xl font-bold text-indigo-600 hover:text-indigo-700 transition-colors;
-  @apply tracking-tight;
+.dark .payment-summary-footer {
+  @apply border-gray-700;
 }
 
-.navbar-link {
-  @apply text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors;
-  @apply relative;
+.payment-summary-footer .total-row {
+  @apply mb-6;
 }
 
-/* Active link indicator */
-.navbar-link.router-link-active {
-  @apply text-indigo-600;
+.payment-summary-footer .primary-button {
+  @apply py-3;
 }
 
-.navbar-link.router-link-active::after {
-  content: '';
-  @apply absolute -bottom-4 left-0 right-0 h-0.5 bg-indigo-600;
-}
+/* ===================================================================
+   COURSE PAGES
+   =================================================================== */
 
-.navbar-right {
-  @apply relative inline-block text-left;
-}
-
-.user-dropdown-trigger {
-  @apply flex items-center space-x-2 px-3 py-2 rounded-lg;
-  @apply hover:bg-gray-100 transition-colors cursor-pointer;
-  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
-}
-
-.user-initials-badge {
-  @apply inline-flex w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600;
-  @apply text-white items-center justify-center font-semibold text-sm;
-  @apply shadow-sm;
-}
-
-.user-name-text {
-  @apply font-medium text-gray-700 text-sm;
-  @apply hidden sm:block;
-}
-
-.dropdown-icon {
-  @apply w-4 h-4 text-gray-400 transition-transform;
-}
-
-.user-dropdown-trigger:hover .dropdown-icon {
-  @apply text-gray-600;
-}
-
-.user-dropdown-menu {
-  @apply absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl z-50;
-  @apply border border-gray-200 py-2;
-  @apply opacity-0 transition-opacity duration-200;
-  animation: dropdownFadeIn 200ms ease-out forwards;
-}
-
-@keyframes dropdownFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.dropdown-menu-item {
-  @apply block px-4 py-2.5 text-sm text-gray-700;
-  @apply hover:bg-gray-50 transition-colors;
-  @apply flex items-center space-x-2;
-}
-
-.dropdown-menu-button {
-  @apply block w-full text-left px-4 py-2.5 text-sm text-gray-700;
-  @apply hover:bg-gray-50 transition-colors;
-  @apply flex items-center space-x-2;
-}
-
-.dropdown-menu-button:last-child {
-  @apply text-red-600 hover:bg-red-50;
-}
-
-
-/* ================================================================= */
-/* MODERN HOME PAGE - Phase 2 Component Redesign */
-/* Frappe LMS Inspired - Hero section with features */
-/* ================================================================= */
-
-.modern-home {
-  @apply min-h-screen bg-gray-50;
-}
-
-/* Hero Section */
-.hero-section {
-  @apply relative overflow-hidden bg-white;
-  @apply py-20 lg:py-28;
-}
-
-.hero-content {
-  @apply max-w-7xl mx-auto px-6 text-center relative z-10;
-}
-
-.hero-badge {
-  @apply inline-flex items-center px-4 py-2 rounded-full text-sm font-medium;
-  @apply bg-indigo-100 text-indigo-800 mb-6;
-}
-
-.hero-title {
-  @apply text-5xl md:text-6xl font-bold text-gray-900 mb-6;
-  @apply tracking-tight;
-}
-
-.hero-description {
-  @apply text-xl text-gray-600 max-w-3xl mx-auto mb-10;
-  @apply leading-relaxed;
-}
-
-.hero-actions {
-  @apply flex items-center justify-center space-x-4 flex-wrap gap-y-4;
-}
-
-.hero-btn-primary {
-  @apply inline-flex items-center px-8 py-4 text-base font-semibold;
-  @apply bg-indigo-600 text-white rounded-xl;
-  @apply hover:bg-indigo-700 transition-colors duration-200;
-  @apply shadow-lg hover:shadow-xl;
-}
-
-.hero-btn-secondary {
-  @apply inline-flex items-center px-8 py-4 text-base font-semibold;
-  @apply bg-white text-gray-700 border-2 border-gray-300 rounded-xl;
-  @apply hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200;
-}
-
-.hero-gradient {
-  @apply absolute inset-0 -z-0;
-  @apply bg-gradient-to-br from-indigo-50 via-white to-purple-50;
-  @apply opacity-60;
-}
-
-/* Features Section */
-.features-section {
-  @apply py-20 bg-gray-50;
-}
-
-.features-container {
-  @apply max-w-7xl mx-auto px-6;
-}
-
-.features-header {
-  @apply text-center mb-16;
-}
-
-.features-title {
-  @apply text-3xl font-bold text-gray-900 mb-4;
-}
-
-.features-subtitle {
-  @apply text-lg text-gray-600;
-}
-
-.features-grid {
-  @apply grid md:grid-cols-3 gap-8;
-}
-
-.feature-card {
-  @apply bg-white p-8 rounded-xl border border-gray-200;
-  @apply hover:shadow-lg transition-shadow duration-200;
-}
-
-.feature-icon {
-  @apply w-12 h-12 rounded-lg flex items-center justify-center mb-4;
-}
-
-.feature-heading {
-  @apply text-xl font-semibold text-gray-900 mb-2;
-}
-
-.feature-text {
-  @apply text-gray-600;
-}
-
-
-/* ----------------------------------------------------------------- */
-/* ABOUT PAGE STYLES */
-/* ----------------------------------------------------------------- */
-
-.about-container {
-  @apply max-w-2xl mx-auto p-8 bg-white rounded shadow mt-10;
-}
-
-.about-title {
-  @apply text-3xl font-bold mb-4 text-indigo-700;
-}
-
-.about-text {
-  @apply text-lg text-gray-700;
-}
-
-
-/* ================================================================= */
-/* MODERN COURSE CARDS - Phase 2 Component Redesign */
-/* Frappe LMS Inspired - Clean cards with hover effects */
-/* ================================================================= */
-
-.filter-toggle-group {
-  @apply inline-flex rounded-lg border border-gray-300 overflow-hidden bg-gray-50;
-}
-
-.filter-toggle-button {
-  @apply px-4 py-2 text-sm font-medium bg-transparent text-gray-600;
-  @apply hover:bg-white transition-colors;
-}
-
-.filter-toggle-active {
-  @apply px-4 py-2 text-sm font-medium bg-white text-indigo-600 shadow-sm;
-}
-
-/* Modern Course Card */
-.modern-course-card {
-  @apply block bg-white rounded-xl border border-gray-200 overflow-hidden;
-  @apply transition-all duration-200;
-  @apply hover:shadow-lg hover:-translate-y-1 hover:border-indigo-200;
-}
-
-.course-card-image {
-  @apply relative overflow-hidden;
-}
-
-.course-card-image .aspect-video {
-  @apply w-full;
-}
-
-.course-description {
-  @apply max-w-none;
-}
-
-/* Text truncation */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Loading Skeleton */
-.course-card-skeleton {
-  @apply bg-white rounded-xl border border-gray-200 overflow-hidden animate-pulse;
-}
-
-.course-card-skeleton::before {
-  content: '';
-  @apply block aspect-video bg-gray-200;
-}
-
-.course-card-skeleton::after {
-  content: '';
-  @apply block h-32 bg-gray-100 mt-4 mx-6 mb-6 rounded;
-}
-
-
-/* ================================================================= */
-/* MODERN COURSE DETAIL PAGE - Phase 3 Enhanced Layouts */
-/* Frappe LMS Inspired - Immersive header, clean modules */
-/* ================================================================= */
-
+/* Course Detail */
 .modern-course-detail {
-  @apply min-h-screen bg-gray-50;
+  @apply min-h-screen;
+  background-color: var(--bg-secondary);
 }
 
 .modern-course-header {
-  @apply bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700;
-  @apply relative overflow-hidden;
+  @apply bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700 relative overflow-hidden;
+}
+
+.dark .modern-course-header {
+  @apply from-indigo-900 via-indigo-950 to-purple-950;
 }
 
 .modern-course-header::before {
@@ -1328,16 +503,26 @@
 }
 
 .start-learning-btn {
-  @apply px-8 py-3 bg-white text-indigo-600 rounded-xl font-semibold hover:bg-gray-100 transition-colors flex items-center space-x-2;
+  @apply btn btn--lg;
+  @apply bg-white text-indigo-600 rounded-xl;
+  @apply flex items-center space-x-2;
+}
+
+.start-learning-btn:hover {
+  @apply bg-gray-100;
 }
 
 .enroll-btn {
-  @apply px-8 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors;
-  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+  @apply btn btn--primary btn--lg;
+  border-radius: var(--radius-xl);
 }
 
 .enrolled-badge {
   @apply px-4 py-3 bg-green-100 text-green-800 rounded-xl flex items-center space-x-2;
+}
+
+.dark .enrolled-badge {
+  @apply bg-green-900/30 text-green-300;
 }
 
 .course-content-grid {
@@ -1354,38 +539,63 @@
 
 .section-heading {
   @apply text-2xl font-bold mb-4;
+  color: var(--text-primary);
 }
 
+/* Module List */
 .module-list-card {
-  @apply bg-white rounded-xl shadow-md;
+  @apply card;
 }
 
 .module-item-container {
   @apply border-b last:border-b-0;
 }
 
+.dark .module-item-container {
+  @apply border-gray-700;
+}
+
 .module-toggle-button {
-  @apply w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors text-left;
+  @apply w-full px-6 py-4 flex items-center justify-between text-left;
+  transition: background-color var(--transition-base);
+}
+
+.module-toggle-button:hover {
+  @apply bg-gray-50;
+}
+
+.dark .module-toggle-button:hover {
+  @apply bg-gray-800;
 }
 
 .module-toggle-content {
   @apply flex-1;
 }
 
-.module-title {
+.module-title,
+.sidebar-module-title {
   @apply font-semibold text-lg;
+  color: var(--text-primary);
 }
 
-.module-meta {
-  @apply text-sm text-gray-600 mt-1;
+.module-meta,
+.sidebar-module-progress {
+  @apply text-sm mt-1;
+  color: var(--text-muted);
 }
 
 .chevron-icon {
-  @apply w-5 h-5 text-gray-400 transition-transform;
+  @apply w-5 h-5;
+  color: var(--text-light);
+  transition: transform var(--transition-base);
 }
 
 .module-lessons-area {
   @apply px-6 pb-4 bg-gray-50;
+}
+
+.dark .module-lessons-area {
+  @apply bg-gray-800;
 }
 
 .lesson-list {
@@ -1396,20 +606,30 @@
   @apply flex items-center space-x-3 py-2;
 }
 
-.lesson-icon {
-  @apply w-5 h-5 text-gray-400;
+.lesson-icon,
+.lesson-type-icon {
+  @apply w-5 h-5;
+  color: var(--text-light);
 }
 
 .lesson-title-text {
-  @apply text-gray-700;
+  color: var(--text-secondary);
 }
 
+.lesson-duration {
+  @apply text-xs mt-0.5 flex items-center gap-1;
+  color: var(--text-light);
+}
+
+/* Sidebar Cards */
 .sidebar-sticky-card {
-  @apply bg-white rounded-lg shadow p-6 sticky top-6;
+  @apply card p-6 sticky;
+  top: var(--spacing-card);
 }
 
 .sidebar-card-title {
   @apply font-bold text-lg mb-4;
+  color: var(--text-primary);
 }
 
 .benefits-list {
@@ -1421,23 +641,33 @@
 }
 
 .benefit-icon {
-  @apply w-5 h-5 text-green-500 flex-shrink-0 mt-0.5;
+  @apply w-5 h-5 flex-shrink-0 mt-0.5;
+  color: var(--color-success);
 }
 
 .benefit-text {
-  @apply text-gray-700;
+  color: var(--text-secondary);
 }
 
+.module-progress-badge {
+  @apply text-xs font-semibold px-2 py-0.5 rounded-full;
+  background-color: var(--color-primary-light);
+  color: var(--color-success);
+}
+
+/* Reviews */
 .reviews-section {
   @apply mt-8;
 }
 
 .reviews-title {
   @apply text-lg font-semibold mb-2;
+  color: var(--text-primary);
 }
 
 .reviews-empty {
-  @apply text-gray-500 mb-2;
+  @apply mb-2;
+  color: var(--text-light);
 }
 
 .reviews-list {
@@ -1445,118 +675,115 @@
 }
 
 .review-card {
-  @apply bg-white p-3 rounded shadow;
+  @apply card p-3;
 }
 
 .review-rating {
   @apply font-medium;
+  color: var(--text-primary);
 }
 
 .review-comment {
-  @apply text-gray-700;
+  color: var(--text-secondary);
 }
 
 .review-timestamp {
-  @apply text-xs text-gray-500;
+  @apply text-xs;
+  color: var(--text-light);
 }
 
 .review-form-container {
   @apply bg-gray-50 p-4 rounded;
 }
 
+.dark .review-form-container {
+  @apply bg-gray-800;
+}
+
 .review-form-title {
   @apply font-semibold mb-2;
+  color: var(--text-primary);
 }
 
 .review-form {
   @apply space-y-3;
 }
 
-.review-form-group {
-  /* No styles, just a container div */
-}
-
 .review-submit-btn {
-  @apply px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors;
+  @apply btn btn--primary;
 }
 
-
-/* ================================================================= */
-/* MODERN LEARNING INTERFACE - Phase 1: Visual Foundation */
-/* Udemy/Coursera Inspired - Light, Clean, Distraction-Free */
-/* ================================================================= */
+/* ===================================================================
+   LEARNING INTERFACE
+   =================================================================== */
 
 .learn-loading-container {
-  @apply flex items-center justify-center min-h-screen bg-gray-50;
+  @apply flex items-center justify-center min-h-screen;
+  background-color: var(--bg-secondary);
 }
 
 .learn-loading-text {
-  @apply text-gray-700 text-lg;
+  @apply text-lg;
+  color: var(--text-secondary);
 }
 
-/* Main Learning Layout - 3 Column Design */
+/* Main Learning Layout */
 .learn-layout {
-  @apply fixed inset-0 bg-white overflow-hidden;
+  @apply fixed inset-0 overflow-hidden;
+  background-color: var(--bg-primary);
   display: grid;
-  grid-template-columns: 940px 280px 1fr;
+  grid-template-columns: var(--content-width) var(--sidebar-narrow) 1fr;
   gap: 0;
 }
 
 .mobile-overlay {
-  @apply fixed inset-0 bg-black/50 z-30 lg:hidden;
+  @apply fixed inset-0 bg-black/50 lg:hidden;
+  z-index: calc(var(--z-modal) - 10);
 }
 
 .sidebar-toggle-btn {
-  @apply fixed top-4 right-4 z-50 lg:hidden bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:bg-indigo-700 transition-colors;
+  @apply fixed top-4 right-4 lg:hidden p-3 rounded-full shadow-lg;
+  background-color: var(--color-primary);
+  @apply text-white;
+  z-index: var(--z-fixed);
+  transition: background-color var(--transition-base);
+}
+
+.sidebar-toggle-btn:hover {
+  background-color: var(--color-primary-hover);
 }
 
 .toggle-icon {
   @apply w-6 h-6;
 }
 
+/* Content Area */
 .content-area {
   @apply flex flex-col overflow-hidden;
   grid-column: 1;
-  border-right: 1px solid #e5e7eb;
+  border-right: 1px solid var(--bg-tertiary);
   justify-content: center;
   align-items: center;
 }
 
 .content-display {
-  @apply  flex-1 flex flex-col overflow-hidden p-0;
+  @apply flex-1 flex flex-col overflow-hidden p-0;
 }
 
 .video-container-area {
-  @apply bg-black relative flex items-center justify-center overflow-hidden rounded-2xl shadow-lg;
-  aspect-ratio: 16 / 9;
+  @apply bg-black relative flex items-center justify-center overflow-hidden shadow-lg;
+  border-radius: var(--radius-xl);
   width: 100%;
 }
-
-.video-wrapper,
-.video-content,
-.aspect-video-container {
-  @apply w-full h-full overflow-hidden;
-  background: transparent;
-  border-radius: 0;
-}
-
-
-
-.lesson-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* or contain if you prefer letterboxing */
-  display: block;
-  border-radius: inherit;
-}
-
 
 .no-video-placeholder {
-  @apply text-gray-500 text-center py-20;
+  @apply text-center py-20;
+  color: var(--text-light);
 }
 
 .placeholder-icon {
-  @apply w-24 h-24 mx-auto mb-4 text-gray-400;
+  @apply w-24 h-24 mx-auto mb-4;
+  color: var(--text-light);
 }
 
 .placeholder-title {
@@ -1567,24 +794,10 @@
   @apply text-sm mt-2;
 }
 
+/* Notes & Content */
 .notes-container {
-  @apply w-full h-full overflow-auto p-6 bg-white;
-}
-
-/* Right Features Panel */
-.features-panel {
-  @apply bg-gradient-to-br from-indigo-50 to-blue-50 border-l border-indigo-100 flex flex-col overflow-hidden;
-  grid-column: 3;
-  height: 100vh;
-  width: 280px;
-}
-
-.features-panel-content {
-  @apply flex-1 flex items-center justify-center p-6;
-}
-
-.features-placeholder {
-  @apply text-center;
+  @apply w-full h-full overflow-auto p-6;
+  background-color: var(--bg-primary);
 }
 
 .notes-content-wrapper {
@@ -1592,19 +805,231 @@
 }
 
 .notes-title {
-  @apply text-3xl font-bold mb-6 text-gray-900;
+  @apply text-3xl font-bold mb-6;
+  color: var(--text-primary);
 }
 
+/* Reading Mode */
+.notes-container[data-reading-mode="true"] {
+  background-color: var(--bg-secondary);
+}
+
+.reading-mode-content {
+  max-width: var(--max-width-prose) !important;
+  @apply mx-auto px-8;
+}
+
+/* Content Controls */
+.content-controls {
+  @apply flex items-center gap-3 mb-6 pb-3 border-b border-gray-200;
+}
+
+.dark .content-controls {
+  @apply border-gray-700;
+}
+
+.control-btn {
+  @apply flex items-center justify-center p-2 rounded-lg;
+  @apply bg-gray-100 hover:bg-gray-200;
+  color: var(--text-muted);
+  transition: all var(--transition-base);
+}
+
+.control-btn:hover {
+  color: var(--text-primary);
+}
+
+.dark .control-btn {
+  @apply bg-gray-800 hover:bg-gray-700;
+}
+
+.control-btn[data-active="true"] {
+  @apply bg-indigo-100 border-2 border-indigo-300;
+  color: var(--color-primary);
+}
+
+.dark .control-btn[data-active="true"] {
+  @apply bg-indigo-900/30;
+}
+
+.font-size-controls {
+  @apply flex items-center gap-2;
+}
+
+.font-size-btn {
+  @apply w-8 h-8 flex items-center justify-center rounded-lg font-bold;
+  @apply bg-gray-100 hover:bg-gray-200;
+  color: var(--text-muted);
+  transition: all var(--transition-base);
+  font-size: 0.875rem;
+}
+
+.font-size-btn[data-size="medium"] {
+  font-size: 1rem;
+}
+
+.font-size-btn[data-size="large"] {
+  font-size: 1.125rem;
+}
+
+.font-size-btn[data-active="true"] {
+  background-color: var(--color-primary);
+  @apply text-white;
+}
+
+.dark .font-size-btn {
+  @apply bg-gray-800 hover:bg-gray-700;
+}
+
+/* Enhanced Content Typography */
+.enhanced-content {
+  @apply leading-relaxed;
+  color: var(--text-primary);
+}
+
+.enhanced-content :deep(h1) {
+  @apply text-3xl font-bold mt-8 mb-4 border-b-2 pb-2;
+  color: var(--text-primary);
+  border-color: var(--bg-tertiary);
+}
+
+.enhanced-content :deep(h2) {
+  @apply text-2xl font-bold mt-8 mb-4;
+  color: var(--text-primary);
+}
+
+.enhanced-content :deep(h3) {
+  @apply text-xl font-semibold mt-6 mb-3;
+  color: var(--text-primary);
+}
+
+.enhanced-content :deep(h4) {
+  @apply text-lg font-semibold mt-4 mb-2;
+  color: var(--text-secondary);
+}
+
+.enhanced-content :deep(p) {
+  @apply mb-4 leading-relaxed;
+  color: var(--text-secondary);
+}
+
+.enhanced-content :deep(strong) {
+  @apply font-semibold;
+  color: var(--text-primary);
+}
+
+.enhanced-content :deep(em) {
+  @apply italic;
+  color: var(--text-secondary);
+}
+
+.enhanced-content :deep(ul),
+.enhanced-content :deep(ol) {
+  @apply mb-4 ml-6 space-y-2;
+  color: var(--text-secondary);
+}
+
+.enhanced-content :deep(li) {
+  @apply mb-2 leading-relaxed;
+}
+
+.enhanced-content :deep(a) {
+  @apply underline font-medium;
+  color: var(--color-primary);
+  transition: color var(--transition-base);
+}
+
+.enhanced-content :deep(a:hover) {
+  color: var(--color-primary-hover);
+}
+
+.enhanced-content :deep(blockquote) {
+  @apply border-l-4 pl-4 italic my-6 py-4 pr-4 rounded-r-lg;
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  color: var(--text-muted);
+}
+
+.enhanced-content :deep(img) {
+  @apply max-w-full h-auto rounded-lg my-6 shadow-lg cursor-pointer;
+  transition: transform var(--transition-base);
+}
+
+.enhanced-content :deep(img:hover) {
+  @apply scale-105;
+}
+
+.enhanced-content :deep(table) {
+  @apply w-full my-6 border-collapse;
+}
+
+.enhanced-content :deep(th) {
+  @apply font-semibold p-3 text-left border;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--bg-tertiary);
+}
+
+.enhanced-content :deep(td) {
+  @apply p-3 border;
+  color: var(--text-secondary);
+  border-color: var(--bg-tertiary);
+}
+
+.enhanced-content :deep(hr) {
+  @apply my-8;
+  border-color: var(--bg-tertiary);
+}
+
+.enhanced-content :deep(code:not(pre code)) {
+  @apply px-2 py-1 rounded text-sm font-mono border;
+  background-color: var(--bg-tertiary);
+  color: var(--color-primary);
+  border-color: var(--bg-tertiary);
+}
+
+.enhanced-content :deep(pre) {
+  @apply p-4 rounded-lg my-6 overflow-x-auto border;
+  @apply bg-gray-900;
+  border-color: var(--bg-tertiary);
+}
+
+.enhanced-content :deep(pre code) {
+  @apply text-gray-100 font-mono text-sm;
+}
+
+/* Tab Navigation */
 .tab-navigation {
-  @apply bg-white border-t border-gray-200 px-6 py-4 flex space-x-2;
+  @apply border-t  items-center justify-between border-gray-200 px-6 py-1 flex space-x-2;
+  background-color: var(--bg-primary);
+}
+
+.dark .tab-navigation {
+  @apply border-gray-700;
 }
 
 .tab-button {
-  @apply px-6 py-3 rounded-lg font-medium transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200;
+  @apply px-6 py-3 rounded-lg font-medium;
+  @apply bg-gray-100;
+  color: var(--text-secondary);
+  transition: all var(--transition-base);
 }
 
-.tab-button-active {
-  @apply px-6 py-3 rounded-lg font-medium transition-colors bg-indigo-600 text-white shadow-sm;
+.tab-button:hover {
+  @apply bg-gray-200;
+}
+
+.dark .tab-button {
+  @apply bg-gray-800;
+}
+
+.dark .tab-button:hover {
+  @apply bg-gray-700;
+}
+
+.tab-button[data-active="true"] {
+  @apply shadow-sm text-white;
+  background-color: var(--color-primary);
 }
 
 .tab-icon-wrapper {
@@ -1615,41 +1040,77 @@
   @apply w-5 h-5;
 }
 
+/* Features Panel */
+.features-panel {
+  @apply bg-gradient-to-br from-indigo-50 to-blue-50;
+  @apply border-l border-indigo-100 flex flex-col overflow-hidden;
+  grid-column: 3;
+  height: 100vh;
+  width: var(--sidebar-narrow);
+}
+
+.dark .features-panel {
+  @apply from-indigo-950 to-blue-950 border-indigo-900;
+}
+
+.features-panel-content {
+  @apply flex-1 flex items-center justify-center p-6;
+}
+
+.features-placeholder {
+  @apply text-center;
+}
+
+/* Course Sidebar */
 .course-sidebar {
   @apply bg-gray-50 border-r border-gray-200 flex flex-col overflow-hidden;
   grid-column: 2;
   height: 100vh;
-  width: 320px;
+  width: var(--sidebar-width);
   position: relative;
 }
 
-.sidebar-visible {
+.dark .course-sidebar {
+  @apply bg-gray-900 border-gray-700;
+}
+
+.course-sidebar[data-visible="true"] {
   display: flex;
 }
 
-.sidebar-hidden {
+.course-sidebar[data-visible="false"] {
   @apply lg:flex;
   display: none;
 }
 
 .sidebar-header {
-  @apply p-6 border-b border-gray-200 bg-white;
+  @apply p-6 border-b border-gray-200;
+  background-color: var(--bg-primary);
+}
+
+.dark .sidebar-header {
+  @apply border-gray-700;
 }
 
 .sidebar-course-title {
-  @apply text-lg font-bold text-gray-900;
+  @apply text-lg font-bold;
+  color: var(--text-primary);
 }
 
 .sidebar-progress-text {
-  @apply text-sm text-gray-600 mt-1;
+  @apply text-sm mt-1;
+  color: var(--text-muted);
 }
 
 .progress-bar-bg {
-  @apply w-full bg-gray-200 rounded-full h-2 mt-3;
+  @apply w-full rounded-full h-2 mt-3;
+  background-color: var(--bg-tertiary);
 }
 
 .progress-bar-fill {
-  @apply bg-green-500 h-2 rounded-full transition-all;
+  @apply h-2 rounded-full;
+  background-color: var(--color-success);
+  transition: width var(--transition-smooth);
 }
 
 .sidebar-modules-area {
@@ -1660,36 +1121,57 @@
   @apply border-b border-gray-200;
 }
 
+.dark .sidebar-module-container {
+  @apply border-gray-700;
+}
+
 .sidebar-module-toggle {
-  @apply w-full px-4 py-3 flex items-center justify-between hover:bg-gray-100 transition-colors text-left;
+  @apply w-full px-4 py-3 flex items-center justify-between text-left;
+  transition: background-color var(--transition-base);
+}
+
+.sidebar-module-toggle:hover {
+  @apply bg-gray-100;
+}
+
+.dark .sidebar-module-toggle:hover {
+  @apply bg-gray-800;
 }
 
 .sidebar-module-info {
   @apply flex-1;
 }
 
-.sidebar-module-title {
-  @apply font-semibold text-gray-900;
-}
-
-.sidebar-module-progress {
-  @apply text-xs text-gray-600 mt-1;
-}
-
 .sidebar-lessons-container {
-  @apply bg-white;
+  background-color: var(--bg-primary);
 }
 
 .sidebar-lesson-button {
-  @apply w-full px-6 py-3 text-left border-l-4 transition-colors border-transparent text-gray-700 hover:bg-gray-50;
+  @apply w-full px-6 py-3 text-left border-l-4;
+  @apply border-transparent;
+  color: var(--text-secondary);
+  transition: all var(--transition-base);
 }
 
-.sidebar-lesson-active {
-  @apply w-full px-6 py-3 text-left border-l-4 transition-colors bg-indigo-50 border-indigo-600 text-indigo-900 font-medium;
+.sidebar-lesson-button:hover {
+  @apply bg-gray-50;
+}
+
+.dark .sidebar-lesson-button:hover {
+  @apply bg-gray-800;
+}
+
+.sidebar-lesson-button[data-active="true"] {
+  @apply bg-indigo-50 border-indigo-600 font-medium;
+  color: var(--color-primary);
+}
+
+.dark .sidebar-lesson-button[data-active="true"] {
+  @apply bg-indigo-900/20;
 }
 
 .lesson-button-content {
-  @apply flex items-start space-x-3;
+  @apply flex items-start space-x-2 w-full;
 }
 
 .lesson-checkbox-wrapper {
@@ -1697,11 +1179,16 @@
 }
 
 .lesson-checkbox-checked {
-  @apply w-5 h-5 text-green-500;
+  @apply w-5 h-5;
+  color: var(--color-success);
 }
 
 .lesson-checkbox-unchecked {
   @apply w-5 h-5 rounded-full border-2 border-gray-300;
+}
+
+.dark .lesson-checkbox-unchecked {
+  @apply border-gray-600;
 }
 
 .lesson-info {
@@ -1712,382 +1199,910 @@
   @apply text-sm font-medium;
 }
 
-.not-found-container {
-  @apply flex items-center justify-center min-h-screen;
-}
-
-.not-found-text {
-  @apply text-red-500 text-lg;
-}
-
-/* ================================================================= */
-/* PHASE 2: ENHANCED NAVIGATION */
-/* Previous/Next buttons, keyboard shortcuts */
-/* ================================================================= */
-
-/* Lesson Navigation Bar */
+/* Lesson Navigation */
 .lesson-navigation {
-  @apply flex items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-200;
+  @apply flex items-center justify-between w-full px-6 py-1 bg-gray-50 border-t border-gray-200;
 }
 
-.nav-button {
-  @apply flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all;
-  @apply bg-white border-2 border-gray-200 text-gray-700;
-  @apply hover:border-indigo-500 hover:text-indigo-600 hover:shadow-md;
-}
-
-.nav-button:disabled {
-  @apply cursor-not-allowed opacity-50 hover:border-gray-200 hover:text-gray-700 hover:shadow-none;
-}
-
-.nav-button-next {
-  @apply flex-row;
-}
-
-.nav-button-prev {
-  @apply flex-row;
+.dark .lesson-navigation {
+  @apply bg-gray-900 border-gray-700;
 }
 
 .lesson-position {
   @apply flex items-center justify-center;
 }
 
-/* Keyboard Key Styling */
 .keyboard-key {
   @apply inline-flex items-center justify-center px-3 py-1 rounded-lg;
-  @apply bg-gray-100 border border-gray-300 text-gray-700 font-mono text-sm;
-  @apply shadow-sm;
+  @apply bg-gray-100 border border-gray-300 font-mono text-sm shadow-sm;
+  color: var(--text-secondary);
   min-width: 2rem;
 }
 
-/* ================================================================= */
-/* PHASE 4: ENHANCED SIDEBAR */
-/* Better organization, progress, lesson info */
-/* ================================================================= */
-
-/* Lesson Type Icon */
-.lesson-type-icon {
-  @apply flex-shrink-0 mr-2;
+.dark .keyboard-key {
+  @apply bg-gray-800 border-gray-600;
 }
 
-/* Lesson Duration */
-.lesson-duration {
-  @apply text-xs text-gray-500 mt-0.5 flex items-center gap-1;
+/* ===================================================================
+   MODALS & OVERLAYS
+   =================================================================== */
+
+.details-modal {
+  @apply absolute top-24 left-1/2 transform -translate-x-1/2;
+  @apply flex items-start justify-center;
+  z-index: var(--z-modal);
 }
 
-/* Module Progress Badge */
-.module-progress-badge {
-  @apply text-xs font-semibold px-2 py-0.5 rounded-full;
-  @apply bg-green-100 text-green-700;
+.details-content {
+  @apply p-6 shadow-2xl w-11/12 sm:w-2/3 lg:w-1/2;
+  @apply max-h-[85vh] overflow-y-auto border border-gray-200;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  animation: fadeInUp 0.3s ease-in-out;
 }
 
-/* Enhanced lesson button content */
-.lesson-button-content {
-  @apply flex items-start space-x-2 w-full;
+.dark .details-content {
+  @apply border-gray-700;
 }
 
-/* Chevron icon for module toggle */
-.chevron-icon {
-  @apply w-5 h-5 transition-transform duration-200 flex-shrink-0;
+.popup-card {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e1e1e;
+  color: white;
+  border: 1px solid #333;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  width: 18rem;
+  z-index: var(--z-popover);
+  box-shadow: var(--shadow-xl);
+  margin-top: 0.5rem;
 }
 
-/* ================================================================= */
-/* PHASE 5: CONTENT ENHANCEMENTS */
-/* Reading mode, font controls, code blocks, better typography */
-/* ================================================================= */
-
-/* Content Controls */
-.content-controls {
-  @apply flex items-center gap-3 mb-6 pb-3 border-b border-gray-200;
+/* Fade Scale Transitions */
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: opacity var(--transition-smooth) ease, transform var(--transition-smooth) ease;
 }
 
-.control-btn {
-  @apply flex items-center justify-center p-2 rounded-lg;
-  @apply bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900;
-  @apply transition-all duration-200;
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  opacity: 0;
+  transform: translateY(-10px) translateX(-50%);
 }
 
-.control-btn.active {
-  @apply bg-indigo-100 text-indigo-600 border-2 border-indigo-300;
+.fade-scale-enter-to,
+.fade-scale-leave-from {
+  opacity: 1;
+  transform: translateY(0) translateX(-50%);
 }
 
-.font-size-controls {
-  @apply flex items-center gap-2;
+/* ===================================================================
+   UTILITY CLASSES
+   =================================================================== */
+
+.filter-toggle-group {
+  @apply inline-flex rounded-lg border border-gray-300 overflow-hidden bg-gray-50;
 }
 
-.font-size-btn {
-  @apply w-8 h-8 flex items-center justify-center rounded-lg;
-  @apply bg-gray-100 text-gray-600 font-bold hover:bg-gray-200;
-  @apply transition-all duration-200;
-  font-size: 0.875rem;
+.dark .filter-toggle-group {
+  @apply border-gray-600 bg-gray-800;
 }
 
-.font-size-btn.medium {
-  font-size: 1rem;
+.filter-toggle-button {
+  @apply px-4 py-2 text-sm font-medium bg-transparent;
+  color: var(--text-muted);
+  transition: all var(--transition-base);
 }
 
-.font-size-btn.large {
-  font-size: 1.125rem;
+.filter-toggle-button:hover {
+  background-color: var(--bg-primary);
 }
 
-.font-size-btn.active {
-  @apply bg-indigo-600 text-white;
+.filter-toggle-button[data-active="true"] {
+  @apply shadow-sm;
+  background-color: var(--bg-primary);
+  color: var(--color-primary);
 }
 
-/* Reading Mode */
-.notes-container.reading-mode {
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.not-found-container {
+  @apply flex items-center justify-center min-h-screen;
+}
+
+.not-found-text {
+  @apply text-lg;
+  color: var(--color-danger);
+}
+
+/* ===================================================================
+   REMOVED CLASSES - UPDATE YOUR FRONTEND
+   =================================================================== */
+
+/*
+
+
+
+/* ===================================================================
+   LEGACY SUPPORT NOTICE
+   =================================================================== */
+
+/*
+The following classes still work but are mapped to the new system.
+They will be maintained for backward compatibility:
+
+✅ STILL SUPPORTED (but consider migrating):
+- .primary-button (maps to .btn .btn--primary .btn--full)
+- .cta-button (maps to .btn .btn--success .btn--rounded)
+- .secondary-button (maps to .btn .btn--secondary)
+- .nav-button (enhanced version exists)
+- All .card-* classes (work as before)
+- All .form-* classes (work as before)
+- All layout containers (work as before)
+- All typography classes (work as before)
+
+RECOMMENDATION:
+For new components, use the new .btn system with modifiers.
+For existing components, legacy classes will continue to work.
+*/
+
+/* ===================================================================
+   CONTAINER QUERIES (Progressive Enhancement)
+   =================================================================== */
+
+@supports (container-type: inline-size) {
+  .card-container {
+    container-type: inline-size;
+  }
+  
+  @container (min-width: 400px) {
+    .menu-card {
+      @apply grid grid-cols-2;
+    }
+  }
+}
+
+}
+
+/* ===================================================================
+   BASE CONFIGURATION
+   =================================================================== */
+@layer base {
+  * {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    font-size: 85%;
+    /* ⚠️ REMOVED: zoom: 0.8 - This caused layout issues and broke responsive design */
+    /* .page-container,
+    .learn-layout,
+    .content-wrapper {
+    transform: scale(0.9);
+    transform-origin: top center; 
+  } */
+  
+  }
+}
+
+/* ===================================================================
+   ACCESSIBILITY & USER PREFERENCES
+   =================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .app-navbar,
+  .site-footer,
+  .sidebar,
+  .app-sidebar,
+  .course-sidebar,
+  .no-print,
+  .sidebar-toggle-btn {
+    display: none !important;
+  }
+  
+  .page-container {
+    @apply pt-0;
+  }
+  
+  .learn-layout {
+    display: block !important;
+  }
+}
+
+/* ===================================================================
+   ANIMATIONS & TRANSITIONS
+   =================================================================== */
+@layer utilities {
+  .transition-smooth {
+    transition: all var(--transition-smooth) var(--ease-smooth);
+  }
+  
+  .transition-bounce {
+    transition: transform var(--transition-smooth) var(--ease-bounce);
+  }
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7); }
+  100% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animation Classes */
+.animate-fade-in { 
+  animation: fadeIn 0.5s ease-out;
+  will-change: opacity, transform;
+}
+
+.animate-slide-in { 
+  animation: slideInRight 0.4s ease-out;
+  will-change: opacity, transform;
+}
+
+.animate-pulse-subtle { 
+  animation: pulse-subtle 2s var(--ease-smooth) infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #f3f4f6 0%, #e5e7eb 50%, #f3f4f6 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Remove will-change after animation */
+.animate-fade-in:not(:hover),
+.animate-slide-in:not(:hover) {
+  will-change: auto;
+}
+
+/* ===================================================================
+   LAYOUT CONTAINERS
+   =================================================================== */
+.page-container {
+  @apply min-h-screen pt-24 pb-4 sm:pb-6 lg:pb-8 px-4 sm:px-6 lg:px-8;
+  background-color: var(--bg-secondary);
+}
+
+.content-wrapper {
+  @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* ===================================================================
+   BUTTON SYSTEM (UNIFIED)
+   =================================================================== */
+@layer components {
+  /* Base Button */
+  .btn {
+    @apply px-6 py-3 rounded-lg font-semibold transition-colors;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    transition-duration: var(--transition-base);
+  }
+  
+  /* Button Variants */
+  .btn--primary {
+    background-color: var(--color-primary);
+    @apply text-white;
+  }
+  
+  .btn--primary:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+  }
+  
+  .btn--primary:focus {
+    @apply ring-indigo-500;
+  }
+  
+  .btn--success {
+    background-color: var(--color-success);
+    @apply text-white;
+  }
+  
+  .btn--success:hover:not(:disabled) {
+    background-color: var(--color-success-hover);
+  }
+  
+  .btn--success:focus {
+    @apply ring-green-500;
+  }
+  
+  .btn--secondary {
+    @apply bg-gray-200 text-gray-700;
+  }
+  
+  .btn--secondary:hover:not(:disabled) {
+    @apply bg-gray-300;
+  }
+  
+  .btn--outline {
+    @apply bg-white text-gray-700 border-2 border-gray-300;
+  }
+  
+  .btn--outline:hover:not(:disabled) {
+    @apply bg-gray-50 border-gray-400;
+  }
+  
+  .btn--danger {
+    background-color: var(--color-danger);
+    @apply text-white;
+  }
+  
+  .btn--danger:hover:not(:disabled) {
+    @apply bg-red-600;
+  }
+  
+  /* Button Sizes */
+  .btn--sm {
+    @apply px-4 py-2 text-sm;
+  }
+  
+  .btn--lg {
+    @apply px-8 py-4 text-base;
+  }
+  
+  .btn--full {
+    @apply w-full;
+  }
+  
+  .btn--rounded {
+    border-radius: var(--radius-full);
+  }
+  
+  /* Button Effects */
+  .btn--lift {
+    transition: all var(--transition-base);
+    will-change: transform, box-shadow;
+  }
+  
+  .btn--lift:hover:not(:disabled) {
+    @apply transform -translate-y-0.5 shadow-lg;
+  }
+  
+  .btn--lift:not(:hover) {
+    will-change: auto;
+  }
+  
+  .btn--scale {
+    transition: transform var(--transition-base);
+  }
+  
+  .btn--scale:hover:not(:disabled) {
+    @apply scale-105;
+  }
+}
+
+/* Legacy Button Classes (Mapped to new system) */
+.primary-button {
+  @apply btn btn--primary btn--full;
+  @apply rounded-xl;
+}
+
+.cta-button {
+  @apply btn btn--success btn--rounded;
+  @apply shadow-lg;
+}
+
+.secondary-button {
+  @apply btn btn--secondary;
+}
+
+/* Navigation Buttons */
+.nav-button {
+  @apply btn btn--outline;
+  @apply flex items-center space-x-2;
+}
+
+.nav-button:hover:not(:disabled) {
+  @apply border-indigo-500 text-indigo-600 shadow-md;
+}
+
+/* ===================================================================
+   NAVIGATION COMPONENTS
+   =================================================================== */
+
+/* Modern Navbar */
+.app-navbar {
+  @apply fixed top-0 inset-x-0;
+  @apply bg-white/80 backdrop-blur-md;
+  @apply border-b border-gray-200;
+  @apply transition-all duration-300;
+  z-index: var(--z-fixed);
+}
+
+.dark .app-navbar {
+  @apply bg-gray-900/80 border-gray-700;
+}
+
+.navbar-container {
+  @apply max-w-7xl mx-auto px-6 py-4 flex justify-between items-center;
+}
+
+.navbar-left {
+  @apply flex items-center space-x-8;
+}
+
+.navbar-logo {
+  @apply text-xl font-bold tracking-tight;
+  color: var(--color-primary);
+  transition: color var(--transition-base);
+}
+
+.navbar-logo:hover {
+  color: var(--color-primary-hover);
+}
+
+.navbar-link {
+  @apply text-sm font-medium relative;
+  color: var(--text-secondary);
+  transition: color var(--transition-base);
+}
+
+.navbar-link:hover {
+  color: var(--text-primary);
+}
+
+.navbar-link[data-active="true"],
+.navbar-link.router-link-active {
+  color: var(--color-primary);
+}
+
+.navbar-link[data-active="true"]::after,
+.navbar-link.router-link-active::after {
+  content: '';
+  @apply absolute -bottom-4 left-0 right-0 h-0.5;
+  background-color: var(--color-primary);
+}
+
+.nav-auth-link {
+  @apply font-medium transition px-4 py-2 rounded-lg;
+  transition-duration: var(--transition-fast);
+  color: var(--text-secondary);
+}
+
+.nav-auth-link:hover {
+  color: var(--color-success);
+}
+
+.nav-auth-link[data-primary="true"] {
+  background-color: var(--color-success);
+  @apply text-white;
+}
+
+.nav-auth-link[data-primary="true"]:hover {
+  background-color: var(--color-success-hover);
+}
+
+/* User Menu */
+.user-dropdown-trigger {
+  @apply flex items-center space-x-2 px-3 py-2 rounded-lg;
+  @apply hover:bg-gray-100 cursor-pointer;
+  @apply focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2;
+  transition: background-color var(--transition-base);
+}
+
+.dark .user-dropdown-trigger:hover {
+  @apply bg-gray-800;
+}
+
+.user-initials-badge {
+  @apply inline-flex w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600;
+  @apply text-white items-center justify-center font-semibold text-sm shadow-sm;
+}
+
+.user-name-text {
+  @apply font-medium text-sm hidden sm:block;
+  color: var(--text-secondary);
+}
+
+.dropdown-icon {
+  @apply w-4 h-4 transition-transform;
+  color: var(--text-light);
+  transition-duration: var(--transition-base);
+}
+
+.user-dropdown-trigger:hover .dropdown-icon {
+  color: var(--text-secondary);
+}
+
+.user-dropdown-menu {
+  @apply absolute right-0 mt-2 w-56 rounded-xl shadow-xl;
+  @apply border border-gray-200 py-2 opacity-0;
+  background-color: var(--bg-primary);
+  z-index: var(--z-dropdown);
+  animation: dropdownFadeIn var(--transition-base) ease-out forwards;
+}
+
+.dark .user-dropdown-menu {
+  @apply border-gray-700;
+}
+
+.dropdown-menu-item,
+.dropdown-menu-button {
+  @apply block px-4 py-2.5 text-sm;
+  @apply flex items-center space-x-2;
+  color: var(--text-secondary);
+  transition: background-color var(--transition-base);
+}
+
+.dropdown-menu-button {
+  @apply w-full text-left;
+}
+
+.dropdown-menu-item:hover,
+.dropdown-menu-button:hover {
   @apply bg-gray-50;
 }
 
-.reading-mode-content {
-  max-width: 42rem !important;
-  @apply mx-auto px-8;
+.dark .dropdown-menu-item:hover,
+.dark .dropdown-menu-button:hover {
+  @apply bg-gray-800;
 }
 
-/* Enhanced Content Typography */
-.enhanced-content {
-  @apply text-gray-800 leading-relaxed;
+.dropdown-menu-button[data-danger="true"] {
+  @apply text-red-600;
 }
 
-.enhanced-content :deep(h1) {
-  @apply text-3xl font-bold mt-8 mb-4 text-gray-900 border-b-2 border-gray-200 pb-2;
+.dropdown-menu-button[data-danger="true"]:hover {
+  @apply bg-red-50;
 }
 
-.enhanced-content :deep(h2) {
-  @apply text-2xl font-bold mt-8 mb-4 text-gray-900;
+.dark .dropdown-menu-button[data-danger="true"]:hover {
+  @apply bg-red-900/20;
 }
 
-.enhanced-content :deep(h3) {
-  @apply text-xl font-semibold mt-6 mb-3 text-gray-900;
+/* Sidebar Navigation */
+@layer components {
+  .app-sidebar {
+    @apply bg-gray-900 text-gray-200 w-64 h-screen p-4;
+    @apply sticky top-0 flex flex-col space-y-2;
+    @apply transition-transform;
+    transition-duration: var(--transition-smooth);
+  }
+
+  .sidebar-item {
+    @apply flex items-center p-3 rounded-lg text-base font-medium;
+    @apply cursor-pointer;
+    transition: background-color var(--transition-fast);
+  }
+  
+  .sidebar-item:hover {
+    @apply bg-gray-700;
+  }
+
+  .sidebar-dropdown-toggle {
+    @apply flex items-center p-3 rounded-lg text-base font-medium;
+    @apply cursor-pointer justify-between;
+    transition: background-color var(--transition-fast);
+  }
+  
+  .sidebar-dropdown-toggle:hover {
+    @apply bg-gray-700;
+  }
+
+  .sidebar-submenu {
+    @apply ml-6 mt-1 space-y-1;
+  }
+
+  .submenu-item {
+    @apply block p-2 rounded-lg text-sm;
+    transition: background-color var(--transition-fast);
+  }
+  
+  .submenu-item:hover {
+    @apply bg-gray-700;
+  }
+
+  .sidebar-item[data-active="true"],
+  .submenu-item[data-active="true"] {
+    background-color: var(--color-success);
+    @apply text-white;
+  }
+  
+  .sidebar-item[data-active="true"]:hover,
+  .submenu-item[data-active="true"]:hover {
+    background-color: var(--color-success-hover);
+  }
+
+  .chevron-rotated {
+    @apply transform rotate-90;
+    transition: transform var(--transition-base);
+  }
 }
 
-.enhanced-content :deep(h4) {
-  @apply text-lg font-semibold mt-4 mb-2 text-gray-800;
+/* ===================================================================
+   CARDS & PANELS SYSTEM
+   =================================================================== */
+
+/* Base Card Styles */
+.card {
+  background-color: var(--bg-primary);
+  @apply rounded-xl shadow-lg;
+  transition: all var(--transition-smooth);
+  will-change: transform, box-shadow;
 }
 
-.enhanced-content :deep(p) {
-  @apply mb-4 text-gray-700 leading-relaxed;
+.card:not(:hover) {
+  will-change: auto;
 }
 
-.enhanced-content :deep(strong) {
-  @apply font-semibold text-gray-900;
+.card--interactive:hover {
+  @apply transform -translate-y-1 shadow-xl;
 }
 
-.enhanced-content :deep(em) {
-  @apply italic text-gray-700;
+.card--glow:hover {
+  box-shadow: 0 10px 40px -10px rgba(79, 70, 229, 0.3);
 }
 
-.enhanced-content :deep(ul),
-.enhanced-content :deep(ol) {
-  @apply mb-4 ml-6 text-gray-700 space-y-2;
+/* Menu/Course Cards */
+.menu-card,
+.modern-course-card {
+  @apply card card--interactive relative;
 }
 
-.enhanced-content :deep(li) {
-  @apply mb-2 leading-relaxed;
+.modern-course-card {
+  @apply border border-gray-200 overflow-hidden;
 }
 
-.enhanced-content :deep(ul li) {
-  @apply relative pl-2;
+.modern-course-card:hover {
+  @apply border-indigo-200;
 }
 
-.enhanced-content :deep(ul li::before) {
-  content: "•";
-  @apply absolute left-0 text-indigo-500 font-bold;
-  margin-left: -1rem;
+.dark .modern-course-card {
+  @apply border-gray-700;
 }
 
-.enhanced-content :deep(ol) {
-  counter-reset: item;
+.dark .modern-course-card:hover {
+  @apply border-indigo-500;
 }
 
-.enhanced-content :deep(ol li) {
-  counter-increment: item;
-  @apply relative pl-2;
+.card-image,
+.course-card-image {
+  @apply w-full h-48 object-cover;
 }
 
-.enhanced-content :deep(ol li::before) {
-  content: counter(item) ".";
-  @apply absolute left-0 text-indigo-600 font-semibold;
-  margin-left: -1.5rem;
+.card-body {
+  padding: var(--spacing-card);
 }
 
-.enhanced-content :deep(a) {
-  @apply text-indigo-600 hover:text-indigo-700 underline font-medium;
-  @apply transition-colors duration-200;
+.card-body h2 {
+  @apply text-xl font-bold mb-2;
+  color: var(--text-primary);
 }
 
-.enhanced-content :deep(blockquote) {
-  @apply border-l-4 border-indigo-500 pl-4 italic text-gray-600 my-6;
-  @apply bg-indigo-50 py-4 pr-4 rounded-r-lg;
+.card-body p {
+  @apply mb-4;
+  color: var(--text-muted);
 }
 
-.enhanced-content :deep(img) {
-  @apply max-w-full h-auto rounded-lg my-6 shadow-lg;
-  @apply transition-transform duration-200 hover:scale-105 cursor-pointer;
+.card-footer {
+  @apply flex justify-between items-center mt-4;
 }
 
-.enhanced-content :deep(table) {
-  @apply w-full my-6 border-collapse;
+.card-action {
+  @apply btn btn--success btn--sm btn--rounded;
 }
 
-.enhanced-content :deep(th) {
-  @apply bg-gray-100 text-gray-900 font-semibold p-3 text-left border border-gray-200;
+/* Feature Cards */
+.feature-card {
+  @apply card p-8 border border-gray-200;
 }
 
-.enhanced-content :deep(td) {
-  @apply p-3 border border-gray-200 text-gray-700;
+.feature-card:hover {
+  @apply shadow-lg;
 }
 
-.enhanced-content :deep(hr) {
-  @apply my-8 border-gray-300;
+.dark .feature-card {
+  @apply border-gray-700;
 }
 
-/* Code Inline */
-.enhanced-content :deep(code:not(pre code)) {
-  @apply bg-gray-100 px-2 py-1 rounded text-sm text-indigo-600 font-mono;
-  @apply border border-gray-200;
+.feature-icon {
+  @apply w-12 h-12 rounded-lg flex items-center justify-center mb-4;
 }
 
-/* Pre and Code Blocks */
-.enhanced-content :deep(pre) {
-  @apply bg-gray-900 p-4 rounded-lg my-6 overflow-x-auto;
-  @apply border border-gray-700;
-}
-
-.enhanced-content :deep(pre code) {
-  @apply text-gray-100 font-mono text-sm;
-}
-
-
-/* ----------------------------------------------------------------- */
-/* MODULE DETAIL PAGE STYLES */
-/* ----------------------------------------------------------------- */
-
-.module-detail-title {
-  @apply text-2xl font-bold mb-2;
-}
-
-.module-detail-description {
-  @apply mb-4 text-gray-700;
-}
-
-.lessons-section-title {
+.feature-heading {
   @apply text-xl font-semibold mb-2;
+  color: var(--text-primary);
 }
 
-.lesson-link-item {
-  @apply mb-2;
+.feature-text {
+  color: var(--text-muted);
 }
 
-.lesson-link {
-  @apply text-indigo-600 hover:underline;
+/* Summary/Info Cards */
+.summary-card {
+  @apply card p-6 border border-gray-100 h-fit sticky;
+  top: var(--spacing-lg);
 }
 
-
-/* ----------------------------------------------------------------- */
-/* LESSON DETAIL PAGE STYLES */
-/* ----------------------------------------------------------------- */
-
-.lesson-detail-title {
-  @apply text-2xl font-bold mb-2;
+.dark .summary-card {
+  @apply border-gray-700;
 }
 
-.lesson-content-area {
-  @apply max-w-none;
+.summary-card h2,
+.section-header {
+  @apply text-2xl font-bold mb-4 pb-2 border-b border-gray-200;
+  color: var(--text-primary);
 }
 
-/* Lesson content typography styling */
-.lesson-content {
-  @apply text-gray-300 leading-relaxed;
+.dark .summary-card h2,
+.dark .section-header {
+  @apply border-gray-700;
 }
 
-.lesson-content h1 {
-  @apply text-3xl font-bold mb-4 text-white;
+.summary-row {
+  @apply flex justify-between text-base py-1;
+  color: var(--text-secondary);
 }
 
-.lesson-content h2 {
-  @apply text-2xl font-bold mb-3 text-white mt-6;
+.total-row {
+  @apply flex justify-between font-bold text-xl mt-4 pt-4 border-t-2;
+  border-color: var(--color-success);
 }
 
-.lesson-content h3 {
-  @apply text-xl font-semibold mb-2 text-white mt-4;
+/* Skeleton Loading */
+.course-card-skeleton {
+  @apply card border border-gray-200 overflow-hidden animate-pulse;
 }
 
-.lesson-content p {
+.course-card-skeleton::before {
+  content: '';
+  @apply block aspect-video bg-gray-200;
+}
+
+.course-card-skeleton::after {
+  content: '';
+  @apply block h-32 bg-gray-100 mt-4 mx-6 mb-6 rounded;
+}
+
+.dark .course-card-skeleton::before {
+  @apply bg-gray-700;
+}
+
+.dark .course-card-skeleton::after {
+  @apply bg-gray-800;
+}
+
+/* ===================================================================
+   FORMS & INPUTS
+   =================================================================== */
+
+.form-input {
+  @apply w-full p-3 border border-gray-300 rounded-lg;
+  @apply focus:ring-2 focus:border-transparent;
+  transition: all var(--transition-base);
+}
+
+.form-input:focus {
+  border-color: var(--color-success);
+  @apply ring-green-500;
+}
+
+.form-input[data-disabled="true"],
+.form-input:disabled {
+  @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+}
+
+.form-input[data-disabled="true"]:focus,
+.form-input:disabled:focus {
+  @apply border-gray-300 ring-0;
+}
+
+.dark .form-input {
+  @apply bg-gray-800 border-gray-600 text-gray-100;
+}
+
+.dark .form-input:disabled {
+  @apply bg-gray-900;
+}
+
+.form-group {
   @apply mb-4;
 }
 
-.lesson-content ul, .lesson-content ol {
-  @apply mb-4 ml-6;
+.form-label {
+  @apply block text-sm font-medium mb-2;
+  color: var(--text-secondary);
 }
 
-.lesson-content li {
-  @apply mb-2;
+.form-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
 }
 
-.lesson-content code {
-  @apply bg-gray-700 px-2 py-1 rounded text-sm text-indigo-300;
+.button-group {
+  @apply mt-6 flex gap-4;
 }
 
-.lesson-content pre {
-  @apply bg-gray-700 p-4 rounded mb-4 overflow-x-auto;
+/* ===================================================================
+   ALERTS & NOTIFICATIONS
+   =================================================================== */
+
+.app-alert {
+  @apply flex items-center p-4 rounded-lg shadow-md space-x-3 text-sm;
 }
 
-.lesson-content a {
-  @apply text-indigo-400 hover:text-indigo-300 underline;
+.app-alert[data-type="success"],
+.alert-success {
+  @apply bg-green-100 text-green-700 border border-green-300;
 }
 
-.lesson-actions {
-  @apply mt-4;
+.app-alert[data-type="error"],
+.alert-error {
+  @apply bg-red-100 text-red-700 border border-red-300;
 }
 
-.mark-complete-btn {
-  @apply px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700;
+.app-alert[data-type="info"],
+.alert-info {
+  @apply bg-indigo-100 text-indigo-700 border border-indigo-300;
 }
 
-.completed-badge {
-  @apply px-3 py-1 bg-green-100 text-green-700 rounded;
+.app-alert[data-type="warning"] {
+  @apply bg-yellow-100 text-yellow-700 border border-yellow-300;
 }
 
-.enroll-notice {
-  @apply text-gray-500;
-}
-
-
-/* ----------------------------------------------------------------- */
-/* ACCOUNT PAGE STYLES */
-/* ----------------------------------------------------------------- */
-
-.account-container {
-  @apply max-w-md mx-auto mt-12 p-8 bg-white rounded shadow;
-}
-
-.account-title {
-  @apply text-2xl font-bold mb-6;
-}
-
-.account-field {
-  @apply mb-4;
-}
-
-.field-label {
-  @apply block text-gray-700 font-medium;
-}
-
-.field-value {
-  @apply block text-lg font-semibold;
-}
-
-.account-note {
-  @apply mt-4 text-gray-600;
-}
-
-
-/* ================================================================= */
-/* TOAST NOTIFICATIONS - Custom Styling */
-/* ================================================================= */
-
-/* Override vue-toastification default styles to match our design system */
+/* Toast Notifications */
 .Vue-Toastification__toast {
   @apply rounded-xl shadow-2xl border;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -2096,23 +2111,28 @@
 }
 
 .Vue-Toastification__toast--success {
-  @apply bg-white border-green-200;
+  background-color: var(--bg-primary);
+  @apply border-green-200;
 }
 
 .Vue-Toastification__toast--error {
-  @apply bg-white border-red-200;
+  background-color: var(--bg-primary);
+  @apply border-red-200;
 }
 
 .Vue-Toastification__toast--warning {
-  @apply bg-white border-yellow-200;
+  background-color: var(--bg-primary);
+  @apply border-yellow-200;
 }
 
 .Vue-Toastification__toast--info {
-  @apply bg-white border-indigo-200;
+  background-color: var(--bg-primary);
+  @apply border-indigo-200;
 }
 
 .Vue-Toastification__toast-body {
-  @apply text-gray-800 font-medium;
+  @apply font-medium;
+  color: var(--text-primary);
 }
 
 .Vue-Toastification__progress-bar {
@@ -2120,21 +2140,156 @@
 }
 
 .Vue-Toastification__toast--success .Vue-Toastification__progress-bar {
-  @apply bg-green-500;
+  background-color: var(--color-success);
 }
 
 .Vue-Toastification__toast--error .Vue-Toastification__progress-bar {
-  @apply bg-red-500;
+  background-color: var(--color-danger);
 }
 
 .Vue-Toastification__toast--warning .Vue-Toastification__progress-bar {
-  @apply bg-yellow-500;
+  background-color: var(--color-warning);
 }
 
 .Vue-Toastification__toast--info .Vue-Toastification__progress-bar {
-  @apply bg-indigo-500;
+  background-color: var(--color-info);
 }
 
 .Vue-Toastification__close-button {
   @apply text-gray-400 hover:text-gray-600;
 }
+
+/* ===================================================================
+   HERO & LANDING SECTIONS
+   =================================================================== */
+
+.hero-section {
+  @apply relative overflow-hidden py-20 lg:py-28;
+  background-color: var(--bg-primary);
+}
+
+.hero-content {
+  @apply max-w-7xl mx-auto px-6 text-center relative;
+  z-index: var(--z-base);
+}
+
+.hero-badge {
+  @apply inline-flex items-center px-4 py-2 rounded-full text-sm font-medium mb-6;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.hero-title {
+  @apply text-5xl md:text-6xl font-bold mb-6 tracking-tight;
+  color: var(--text-primary);
+}
+
+.hero-description {
+  @apply text-xl max-w-3xl mx-auto mb-10 leading-relaxed;
+  color: var(--text-muted);
+}
+
+.hero-actions {
+  @apply flex items-center justify-center space-x-4 flex-wrap gap-y-4;
+}
+
+.hero-btn-primary {
+  @apply btn btn--primary btn--lg;
+  @apply inline-flex items-center shadow-lg;
+  border-radius: var(--radius-xl);
+}
+
+.hero-btn-primary:hover {
+  @apply shadow-xl;
+}
+
+.hero-btn-secondary {
+  @apply btn btn--outline btn--lg;
+  @apply inline-flex items-center;
+  border-radius: var(--radius-xl);
+}
+
+.hero-gradient {
+  @apply absolute inset-0 -z-0 opacity-60;
+  @apply bg-gradient-to-br from-indigo-50 via-white to-purple-50;
+}
+
+.dark .hero-gradient {
+  @apply from-indigo-950 via-gray-900 to-purple-950;
+}
+
+/* Features Section */
+.features-section {
+  padding: var(--spacing-section) 0;
+  background-color: var(--bg-secondary);
+}
+
+.features-container {
+  @apply max-w-7xl mx-auto px-6;
+}
+
+.features-header {
+  @apply text-center mb-16;
+}
+
+.features-title,
+.section-title {
+  @apply text-3xl font-bold mb-4;
+  color: var(--text-primary);
+}
+
+.features-subtitle {
+  @apply text-lg;
+  color: var(--text-muted);
+}
+
+.features-grid {
+  @apply grid md:grid-cols-3 gap-8;
+}
+
+.menu-grid {
+  @apply max-w-6xl mx-auto;
+  @apply grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-visible;
+}
+
+/* ===================================================================
+   FOOTER
+   =================================================================== */
+
+.site-footer {
+  @apply bg-gray-800 text-gray-300 p-8 mt-12 fixed bottom-0 left-0 right-0;
+  z-index: var(--z-fixed);
+}
+
+.footer-content {
+  @apply max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center;
+}
+
+.copyright-text {
+  @apply text-sm;
+}
+
+.footer-links {
+  @apply flex space-x-4 mt-4 md:mt-0;
+}
+
+.site-footer a {
+  @apply text-sm;
+  transition: color var(--transition-fast);
+}
+
+.site-footer a:hover {
+  color: var(--color-success);
+}
+
+/* ===================================================================
+   AUTH PAGES
+   =================================================================== */
+
+.auth-page {
+  @apply h-screen flex items-center justify-center p-4 overflow-auto;
+  @apply bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100;
+  position: relative;
+}
+
+

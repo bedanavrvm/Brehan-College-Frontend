@@ -60,7 +60,7 @@
       <div class="content-display">
         <!-- Video/Content Area - Responsive height -->
         <div class="video-container-area">
-          <div v-if="activeTab === 'video'" class="video-wrapper">
+          <div v-if="activeTab === 'video'">
             <div v-if="currentLesson && hasVideo(currentLesson)" class="video-content aspect-video-container" style="position: relative;">
               <div v-html="renderVideoContent(currentLesson)"></div>
                
@@ -162,7 +162,13 @@
 
         </div>
 
-        <!-- Previous/Next Navigation -->
+        
+
+        
+
+      </div>
+
+      <!-- Previous/Next Navigation -->
         <div class="lesson-navigation" v-if="currentLesson">
           <button
             @click="goToPreviousLesson"
@@ -242,8 +248,10 @@
             </span>
           </button>
         </div>
-      </div>
+
     </div>
+
+    
 
     <!-- Sidebar: Course Outline -->
     <div
@@ -652,7 +660,7 @@ const renderVideoContent = (lesson) => {
       // 🔧 Add your own class for consistent styling
       videoHTML = videoHTML.replace(
         /<video/i,
-        '<video class="lesson-video"'
+        '<video class="video-container-area"'
       )
 
       return videoHTML
