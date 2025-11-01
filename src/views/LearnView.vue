@@ -59,20 +59,11 @@
       <!-- Content Display Area -->
       <div class="content-display">
         <!-- Video/Content Area - Responsive height -->
-        <div class="video-container-area" style="flex: 1; min-height: 400px; position: relative;">
+        <div class="video-container-area">
           <div v-if="activeTab === 'video'" class="video-wrapper">
-            <div v-if="currentLesson && hasVideo(currentLesson)" class="video-content" style="position: relative;">
+            <div v-if="currentLesson && hasVideo(currentLesson)" class="video-content aspect-video-container" style="position: relative;">
               <div v-html="renderVideoContent(currentLesson)"></div>
-              
-              <!-- Phase 3: Enhanced Video Controls -->
-              <VideoControls
-                :currentSpeed="playbackSpeed"
-                :isPiPActive="isPiPActive"
-                :currentQuality="videoQuality"
-                @setSpeed="setPlaybackSpeed"
-                @togglePiP="togglePictureInPicture"
-                @setQuality="setVideoQuality"
-              />
+               
             </div>
             <div v-else class="no-video-placeholder">
               <svg class="placeholder-icon" fill="currentColor" viewBox="0 0 20 20">
@@ -81,6 +72,16 @@
               <p class="placeholder-title">No video available for this lesson</p>
               <p class="placeholder-subtitle">Check the Notes tab for lesson content</p>
             </div>
+
+            <!-- Phase 3: Enhanced Video Controls -->
+              <VideoControls
+                :currentSpeed="playbackSpeed"
+                :isPiPActive="isPiPActive"
+                :currentQuality="videoQuality"
+                @setSpeed="setPlaybackSpeed"
+                @togglePiP="togglePictureInPicture"
+                @setQuality="setVideoQuality"
+              />
           </div>
 
           <div v-else-if="activeTab === 'notes'" class="notes-container" :class="{ 'reading-mode': readingMode }">
@@ -639,37 +640,42 @@ const hasVideo = (lesson) => {
 
 const renderVideoContent = (lesson) => {
   if (!lesson) return ''
-  
-  console.log('renderVideoContent called')
-  console.log('lesson.rendered_content type:', typeof lesson.rendered_content)
-  
-  // Extract video from rendered_content
+
   if (lesson.rendered_content && typeof lesson.rendered_content === 'string') {
-    // Use regex to extract video element
     const videoMatch = lesson.rendered_content.match(/<video[^>]*>[\s\S]*?<\/video>/i)
     if (videoMatch) {
-      console.log('Found video in rendered_content')
-      return videoMatch[0]
+      let videoHTML = videoMatch[0]
+
+      // 🔧 Remove any inline styles (width/max-width/height)
+      videoHTML = videoHTML.replace(/style="[^"]*"/gi, '')
+
+      // 🔧 Add your own class for consistent styling
+      videoHTML = videoHTML.replace(
+        /<video/i,
+        '<video class="lesson-video"'
+      )
+
+      return videoHTML
     }
   }
-  
-  // Fallback: try content array
+
+  // Fallback: content array (works fine as-is)
   if (lesson.content && Array.isArray(lesson.content)) {
     const videoBlock = lesson.content.find(block => block.type === 'video')
-    if (videoBlock && videoBlock.value && videoBlock.value.video_file) {
+    if (videoBlock && videoBlock.value?.video_file) {
       const videoUrl = videoBlock.value.video_file
       return `
-        <video controls class="w-full h-full" style="max-height: 100vh;">
+        <video controls class="lesson-video">
           <source src="${videoUrl}" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       `
     }
   }
-  
-  console.log('No video found')
+
   return ''
 }
+
 
 const renderNotesContent = (lesson) => {
   if (!lesson) return '<p class="text-gray-400">No lesson selected.</p>'
@@ -1005,4 +1011,30 @@ onUnmounted(() => {
 .download-link svg {
   @apply -ml-1 mr-2 h-5 w-5;
 }
+
+/* Aspect Ratio for Video Player */
+.aspect-video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.aspect-video-container :deep(video),
+.aspect-video-container :deep(iframe) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* or contain if you want full frame */
+  display: block;
+}
+
+
+
+
 </style>

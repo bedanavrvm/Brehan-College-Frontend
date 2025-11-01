@@ -143,7 +143,7 @@ const setQuality = (quality) => {
 <style scoped>
 .video-controls-wrapper {
   position: absolute;
-  bottom: 0;
+  bottom: 30px;
   left: 0;
   right: 0;
   z-index: 10;
@@ -151,8 +151,9 @@ const setQuality = (quality) => {
 }
 
 .video-controls-overlay {
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
-  padding: 3rem 1.5rem 1.5rem;
+  
+  padding: 1rem 1.5rem;
+
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: auto;
